@@ -467,8 +467,7 @@ class Shot extends GameObject
  * @type {Array}
  */
 let deposit = [];
-class Sound
-{
+class Sound {
     constructor(tag, loop) {
         this.source = tag.src;
         this.loop = !!loop;
@@ -503,57 +502,61 @@ class Sound
     }
 
     static createAudio(src) {
-    let d;
-    Sound.active++;
-    for (let i = deposit.length; i--;) {
-        d = deposit[i];
-        if (!d.active && d.src === src) {
-            d.active = true;
-            d.element.currentTime = 0;
-            return d.element;
+        let d;
+        Sound.active++;
+        for (let i = deposit.length; i--;) {
+            d = deposit[i];
+            if (!d.active && d.src === src) {
+                d.active = true;
+                d.element.currentTime = 0;
+                return d.element;
+            }
         }
+        d = {
+            active: true,
+            src: src,
+            element: new Audio(src),
+        };
+        deposit.push(d);
+        return d.element;
     }
-    d = {
-        active: true,
-        src: src,
-        element: new Audio(src),
-    };
-    deposit.push(d);
-    return d.element;
-}
+
     static destroyAudio(element) {
-    Sound.active--;
-    for (let i = deposit.length; i--;) {
-        if (deposit[i].element === element) {
-            deposit[i].active = false;
-            break;
+        Sound.active--;
+        for (let i = deposit.length; i--;) {
+            if (deposit[i].element === element) {
+                deposit[i].active = false;
+                break;
+            }
         }
     }
-}
+
     static disable() {
-    if (Sound.enabled) {
-        Sound.enabled = false;
-        for (let i = deposit.length; i--;) {
-            if (deposit[i].active)
-                deposit[i].element.pause();
+        if (Sound.enabled) {
+            Sound.enabled = false;
+            for (let i = deposit.length; i--;) {
+                if (deposit[i].active)
+                    deposit[i].element.pause();
+            }
         }
     }
-}
+
     static enable() {
-    if (!Sound.enabled) {
-        Sound.enabled = true;
-        for (let i = deposit.length; i--;) {
-            if (deposit[i].active)
-                deposit[i].element.play();
+        if (!Sound.enabled) {
+            Sound.enabled = true;
+            for (let i = deposit.length; i--;) {
+                if (deposit[i].active)
+                    deposit[i].element.play();
+            }
         }
     }
-}
+
     static setVolume(volume) {
-    Sound.volume = volume;
-    for (let i = deposit.length; i--;) {
-        deposit[i].element.volume = volume;
+        Sound.volume = volume;
+        for (let i = deposit.length; i--;) {
+            deposit[i].element.volume = volume;
+        }
     }
-}
 }
 Sound.volume = 1.0;
 Sound.channels = 6;
