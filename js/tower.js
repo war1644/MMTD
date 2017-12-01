@@ -13,31 +13,12 @@
  */
 
 "use strict";
-class RLA extends Tower
-{
-    constructor() {
-        super(RLA.speed, 200, RLA.range, RLA.shotType);
-        this.typeName = 'RLA';
-        this.createVisual(RLA.sprite, RLA.frames);
-    }
-}
-RLA.description = "红色战车塔";
-RLA.nickName = '红色战车';
-RLA.sprite = 'RLA';
-RLA.frames = [4,4,4,4];
-RLA.shotType = SeShot;
-RLA.speed = 1;
-RLA.range = 6;
-RLA.rating = ~~(RLA.speed * Math.log(RLA.range + 1.0) * RLA.shotType.rating);
-RLA.cost = ~~(RLA.rating / 6.0 + 1.0);
-types.towers['RLA'] = RLA;
-
 class Rock extends Tower
 {
     constructor() {
         super(Rock.speed, 200, Rock.range);
         this.typeName = 'Rock';
-        this.createVisual(Rock.sprite, );
+        this.createVisual(Rock.sprite, Rock.frames);
     }
 }
 Rock.description = "路障，阻碍敌人路线";
@@ -51,27 +32,139 @@ Rock.rating = 0;
 Rock.cost = 1.0;
 types.towers['Rock'] = Rock;
 
-
-/*
-class MGNest extends Tower
+class MG extends Tower
 {
     constructor() {
-        super(MGNest.speed, 25, MGNest.range, MGNest.shotType);
-        this.typeName = 'MGNest';
-        this.createVisual(MGNest.sprite, [1]);
+        super(MG.speed, 25, MG.range, MG.shotType);
+        this.typeName = 'MG';
+        this.createVisual(MG.sprite, MG.frames);
     }
 }
-MGNest.description = '物美价廉，它可以帮助你抵御很多低装甲部队。';
-MGNest.nickName = '机枪塔';
-MGNest.sprite = 'mgnest';
-MGNest.frames = 1;
-MGNest.shotType = MGShot;
-MGNest.speed = 4.0;
-MGNest.range = 4.0;
-MGNest.rating = MGNest.speed * Math.log(MGNest.range + 1.0) * MGNest.shotType.rating;
-MGNest.cost = Math.round(MGNest.rating / 6.0 + 1.0);
-// types.towers['MGNest'] = MGNest;
+MG.description = '';
+MG.nickName = '2战车';
+MG.sprite = 'mgTank';
+MG.frames = [1];
+MG.shotType = MGShot;
+MG.speed = 4.0;
+MG.range = 4.0;
+MG.rating = MG.speed * Math.log(MG.range + 1.0) * MG.shotType.rating;
+MG.cost = Math.round(MG.rating / 6.0 + 1.0);
+types.towers['MG'] = MG;
 
+class RLA extends Tower
+{
+    constructor() {
+        super(RLA.speed, 200, RLA.range, RLA.shotType);
+        this.typeName = 'RLA';
+        this.createVisual(RLA.sprite, RLA.frames);
+    }
+}
+RLA.description = "红色战车塔";
+RLA.nickName = '红色战车';
+RLA.sprite = 'RLA';
+RLA.frames = [4,4,4,4];
+RLA.shotType = CannonShot;
+RLA.speed = 1;
+RLA.range = 6;
+RLA.rating = ~~(RLA.speed * Math.log(RLA.range + 1.0) * RLA.shotType.rating);
+RLA.cost = ~~(RLA.rating / 6.0 + 1.0);
+types.towers['RLA'] = RLA;
+
+/**
+ * 高射炮
+ */
+class Flak extends Tower
+{
+    constructor() {
+        super(Flak.speed, 200, Flak.range, Flak.shotType);
+        this.typeName = 'Flak';
+        this.createVisual(Flak.sprite, Flak.frames);
+    }
+
+    targetFilter(target) {
+        return target.strategy === MazeStrategy.air;
+    }
+}
+Flak.description = '唯一的防空武器';
+Flak.nickName = '防空塔';
+Flak.sprite = 'gmsUnit';
+Flak.frames = [4, 4, 4, 4];
+Flak.shotType = AirShot;
+Flak.speed = 5.0;
+Flak.range = 5.0;
+Flak.rating = Flak.speed * Math.log(Flak.range + 1.0) * Flak.shotType.rating;
+Flak.cost = 4;
+types.towers['Flak'] = Flak;
+
+/**
+ * 激光塔
+ */
+class LaserTower extends Tower
+{
+    constructor() {
+        super(LaserTower.speed, 25, LaserTower.range, LaserTower.shotType);
+        this.typeName = 'LaserTower';
+        this.createVisual(LaserTower.sprite, );
+    }
+}
+LaserTower.description = "";
+LaserTower.nickName = '激光战车';
+LaserTower.sprite = 'laserTank';
+LaserTower.frames = [4, 4, 4, 4];
+LaserTower.shotType = LaserShot;
+LaserTower.speed = 4.0;
+LaserTower.range = 5.0;
+LaserTower.rating = LaserTower.speed * Math.log(LaserTower.range + 1.0) * LaserTower.shotType.rating;
+LaserTower.cost = 11;
+types.towers['LaserTower'] = LaserTower;
+
+/**
+ * 冷冻塔
+ */
+class IceTower extends Tower
+{
+    constructor() {
+        super(IceTower.speed, 200, IceTower.range, IceTower.shotType);
+        this.typeName = 'IceTower';
+        this.createVisual(IceTower.sprite, IceTower.frames);
+    }
+}
+IceTower.description = '';
+IceTower.nickName = '冷冻塔';
+IceTower.sprite = 'iceTank';
+IceTower.frames = [4, 4, 4, 4];
+IceTower.shotType = IceShot;
+IceTower.speed = 2.0;
+IceTower.range = 6.0;
+IceTower.rating = IceTower.speed * Math.log(IceTower.range + 1.0) * IceTower.shotType.rating;
+IceTower.cost = 9;
+types.towers['IceTower'] = IceTower;
+
+/**
+ * 地狱门
+ */
+class HellGate extends Tower
+{
+    constructor() {
+        super(HellGate.speed, 200, HellGate.range, HellGate.shotType);
+        this.typeName = 'HellGate';
+        this.createVisual(HellGate.sprite, HellGate.frames);
+    }
+}
+HellGate.description = '';
+HellGate.nickName = '地狱门';
+HellGate.sprite = 'hellTower';
+HellGate.frames = [6];
+HellGate.shotType = HellShot;
+HellGate.speed = 1.0;
+HellGate.range = 2.0;
+HellGate.rating = HellGate.speed * Math.log(HellGate.range + 1.0) * HellGate.shotType.rating;
+HellGate.cost = 30;
+types.towers['HellGate'] = HellGate;
+
+
+
+/*
 class CanonTower extends Tower
 {
     constructor() {
@@ -110,83 +203,11 @@ FlameTower.rating = FlameTower.speed * Math.log(FlameTower.range + 1.0) * FlameT
 FlameTower.cost = 5;
 // types.towers['FlameTower'] = FlameTower;
 
-class Flak extends Tower
-{
-    constructor() {
-        super(Flak.speed, 200, Flak.range, Flak.shotType);
-        this.typeName = 'Flak';
-        this.createVisual(Flak.sprite, [1, 1, 1, 1]);
-    }
 
-    targetFilter(target) {
-        return target.strategy === MazeStrategy.air;
-    }
-}
-Flak.description = '唯一的防空武器, 相信我，游戏里很多时候你会迫切需求这玩意。';
-Flak.nickName = '防空塔';
-Flak.sprite = 'flak';
-Flak.frames = 4;
-Flak.shotType = AirShot;
-Flak.speed = 5.0;
-Flak.range = 5.0;
-Flak.rating = Flak.speed * Math.log(Flak.range + 1.0) * Flak.shotType.rating;
-Flak.cost = 4;
-// types.towers['Flak'] = Flak;
 
-class IceTower extends Tower
-{
-    constructor() {
-        super(IceTower.speed, 200, IceTower.range, IceTower.shotType);
-        this.typeName = 'IceTower';
-        this.createVisual(IceTower.sprite, [1, 1, 1, 1]);
-    }
-}
-IceTower.description = '攻速慢，记得选择反应缓慢装甲部队攻击';
-IceTower.nickName = '冷冻塔';
-IceTower.sprite = 'icetower';
-IceTower.frames = 4;
-IceTower.shotType = IceShot;
-IceTower.speed = 2.0;
-IceTower.range = 6.0;
-IceTower.rating = IceTower.speed * Math.log(IceTower.range + 1.0) * IceTower.shotType.rating;
-IceTower.cost = 9;
-// types.towers['IceTower'] = IceTower;
 
-class LaserTower extends Tower
-{
-    constructor() {
-        super(LaserTower.speed, 25, LaserTower.range, LaserTower.shotType);
-        this.typeName = 'LaserTower';
-        this.createVisual(LaserTower.sprite, [1, 1, 1, 1]);
-    }
-}
-LaserTower.description = "射速非常快，但低伤。";
-LaserTower.nickName = '加特林';
-LaserTower.sprite = 'lasertower';
-LaserTower.frames = 4;
-LaserTower.shotType = LaserShot;
-LaserTower.speed = 4.0;
-LaserTower.range = 5.0;
-LaserTower.rating = LaserTower.speed * Math.log(LaserTower.range + 1.0) * LaserTower.shotType.rating;
-LaserTower.cost = 11;
-// types.towers['LaserTower'] = LaserTower;
 
-class GateToHell extends Tower
-{
-    constructor() {
-        super(GateToHell.speed, 200, GateToHell.range, GateToHell.shotType);
-        this.typeName = 'GateToHell';
-        this.createVisual(GateToHell.sprite, [6]);
-    }
-}
-GateToHell.description = '终极武器，注意该建筑基本打不中高速单位。';
-GateToHell.nickName = '地狱之门';
-GateToHell.sprite = 'gatetohell';
-GateToHell.frames = 6;
-GateToHell.shotType = HellShot;
-GateToHell.speed = 1.0;
-GateToHell.range = 2.0;
-GateToHell.rating = GateToHell.speed * Math.log(GateToHell.range + 1.0) * GateToHell.shotType.rating;
-GateToHell.cost = 30;
-// types.towers['GateToHell'] = GateToHell;
+
+
+
 */

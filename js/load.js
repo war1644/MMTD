@@ -12,6 +12,157 @@
  * v2017/11/3 12:41 初版
  */
 "use strict";
+let resources = {
+    images: [
+        {
+            name: 'background',
+            value: 'asset/background.jpg'
+        },
+        //tower img
+        {
+            name: 'rockTower',
+            value: 'asset/sprites/rockTower.png'
+        },
+        {
+            name: 'mgTank',
+            value: 'asset/sprites/mgTank.png'
+        },
+        {
+            name: 'iceTank',
+            value: 'asset/sprites/iceTank.png'
+        },
+        {
+            name: 'redTank',
+            value: 'asset/sprites/redTank.png'
+        },
+        {
+            name: 'laserTank',
+            value: 'asset/sprites/laserTank.png'
+        },
+
+        //unit img
+        {
+            name: 'dogUnit',
+            value: 'asset/sprites/dogUnit.png'
+        },
+        {
+            name: 'maxierUnit',
+            value: 'asset/sprites/maxierUnit.png'
+        },
+        {
+            name: 'paluUnit',
+            value: 'asset/sprites/paluUnit.png'
+        },
+        {
+            name: 'skyUnit',
+            value: 'asset/sprites/skyUnit.png'
+        },
+        {
+            name: 'gmsUnit',
+            value: 'asset/sprites/gmsUnit.png'
+        },
+        {
+            name: 'blackTank',
+            value: 'asset/sprites/blackTank.png'
+        },
+
+        //shot
+        {
+            name:'mgShot',
+            value: 'asset/sprites/mgShot.png'
+        },
+        {
+            name: 'cannonShot',
+            value: 'asset/sprites/cannonShot.png'
+        },
+        // {
+        //     name: 'seShot',
+        //     value: 'asset/sprites/seShot.png'
+        // },
+        {
+            name: 'laserShot',
+            value: 'asset/sprites/laserShot.png'
+        },
+        {
+            name: 'iceShot',
+            value: 'asset/sprites/iceShot.png'
+        },
+        {
+            name: 'fireShot',
+            value: 'asset/sprites/fireShot.png'
+        },
+        {
+            name: 'hellShot',
+            value: 'asset/sprites/hellShot.png'
+        },
+    ],
+
+    sounds: [
+        {
+            name: 'theme',
+            value: {
+                mp3: 'asset/music/wzhy.mp3'
+            }
+        },
+        {
+            name: 'showUnit',
+            value: {
+                mp3: 'asset/audio/showUnit.wav'
+            }
+        },
+        {
+            name: 'mgAttack',
+            value: {
+                mp3: 'asset/audio/mgAttack.wav'
+            }
+        },
+        {
+            name: 'mg',
+            value: {
+                mp3: 'asset/audio/mg.mp3'
+            }
+        },
+        {
+            name: 'cannonAttackEnd',
+            value: {
+                mp3: 'asset/audio/cannonAttackEnd.wav'
+            }
+        },
+        {
+            name: 'cannonAttack',
+            value: {
+                mp3: 'asset/audio/cannonAttack.wav'
+            }
+        },
+        {
+            name: 'seAttack',
+            value: {
+                mp3: 'asset/audio/seAttack.mp3'
+            }
+        },
+        {
+            name: 'flee',
+            value: {
+                mp3: 'asset/audio/flee.wav'
+            }
+        },
+        {
+            name: 'ice',
+            value: {
+                mp3: 'asset/audio/ice.mp3'
+            }
+        },
+        {
+            name: 'laser',
+            value: {
+                mp3: 'asset/audio/laser.mp3'
+            }
+        },
+
+    ]
+};
+
+
 /**
  * 接收一个资源列表，而加载任务的进度、错误、完成事件、则可通过设置回调函数来取得
  */
@@ -106,6 +257,15 @@ class SoundLoader extends ResourceLoader
     constructor(target) {
         super(target);
     }
+
+    /**
+     *  audio/x-wav == wav
+     *  audio/mpeg == mp3
+     *  audio/mid == mid
+     * @param name
+     * @param value
+     * @returns {*}
+     */
     loadResource(name, value) {
         let me = this;
         let element = document.createElement('audio');
@@ -115,9 +275,6 @@ class SoundLoader extends ResourceLoader
         element.addEventListener('error', function() {
             me.error(name);
         }, false);
-        /*if (element.canPlayType('audio/ogg').replace(/^no$/, ''))
-            element.src = value.ogg;
-        else */
         if (element.canPlayType('audio/mpeg').replace(/^no$/, '')){
             element.src = value.mp3;
         } else {

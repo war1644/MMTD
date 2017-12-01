@@ -14,25 +14,25 @@
 "use strict";
 
 /**
- * SE炮
+ * 机枪
  */
-class SeShot extends Shot
+class MGShot extends Shot
 {
     constructor() {
-        super(SeShot.speed, 25, SeShot.damage, SeShot.impactRadius);
-        this.createVisual(SeShot.sprite, SeShot.frames);
-        this.playSound('seAttack');
+        super(MGShot.speed, 25, MGShot.damage, MGShot.impactRadius);
+        this.createVisual(MGShot.sprite, [1, 1, 1, 1], 0.3);
+        this.playSound('mg');
     }
 }
-SeShot.nickName = 'S-E';
-SeShot.description = '威力巨大';
-SeShot.sprite = 'se';
-SeShot.frames = [20];
-SeShot.speed = 1.5;
-SeShot.damage = 100;
-SeShot.impactRadius = 0.5;
-SeShot.rating = Math.log(SeShot.speed + 1) * SeShot.damage * Math.log(SeShot.impactRadius + 1);
-types.shots['SeShot'] = SeShot;
+MGShot.nickName = '机枪类型';
+MGShot.description = '';
+MGShot.sprite = 'mgShot';
+MGShot.frames = 4;
+MGShot.speed = 8.0;
+MGShot.damage = 2;
+MGShot.impactRadius = 0.5;
+MGShot.rating = Math.log(MGShot.speed + 1) * MGShot.damage * Math.log(MGShot.impactRadius + 1);
+types.shots['MGShot'] = MGShot;
 
 /**
  * 主炮
@@ -45,9 +45,9 @@ class CannonShot extends Shot
         this.playSound('cannonAttack');
     }
 }
-CannonShot.nickName = '主炮';
+CannonShot.nickName = '主炮类型';
 CannonShot.description = '战斗中核心输出';
-CannonShot.sprite = 'cannon';
+CannonShot.sprite = 'cannonShot';
 CannonShot.frames = [6, 6, 6, 6];
 CannonShot.speed = 10;
 CannonShot.damage = 15;
@@ -55,6 +55,69 @@ CannonShot.impactRadius = 0.5;
 CannonShot.rating = Math.log(CannonShot.speed + 1) * CannonShot.damage * Math.log(CannonShot.impactRadius + 1);
 types.shots['CannonShot'] = CannonShot;
 
+/**
+ * 激光
+ */
+class LaserShot extends Shot
+{
+    constructor() {
+        super(LaserShot.speed, 25, LaserShot.damage, LaserShot.impactRadius);
+        this.createVisual(LaserShot.sprite, LaserShot.frames);
+        this.playSound('laser');
+    }
+}
+LaserShot.nickName = '激光类型';
+LaserShot.description = '';
+LaserShot.sprite = 'laserShot';
+LaserShot.frames = [6, 6, 6, 6];
+LaserShot.speed = 10;
+LaserShot.damage = 7;
+LaserShot.impactRadius = 0.5;
+LaserShot.rating = Math.log(LaserShot.speed + 1) * LaserShot.damage * Math.log(LaserShot.impactRadius + 1);
+types.shots['LaserShot'] = LaserShot;
+
+
+/**
+ * SE炮
+ */
+// class SeShot extends Shot
+// {
+//     constructor() {
+//         super(SeShot.speed, 25, SeShot.damage, SeShot.impactRadius);
+//         this.createVisual(SeShot.sprite, SeShot.frames);
+//         this.playSound('seAttack');
+//     }
+// }
+// SeShot.nickName = 'S-E类型';
+// SeShot.description = '威力巨大';
+// SeShot.sprite = 'se';
+// SeShot.frames = [20];
+// SeShot.speed = 1.5;
+// SeShot.damage = 100;
+// SeShot.impactRadius = 0.5;
+// SeShot.rating = Math.log(SeShot.speed + 1) * SeShot.damage * Math.log(SeShot.impactRadius + 1);
+// types.shots['SeShot'] = SeShot;
+
+/**
+ *
+ */
+class HellShot extends Shot
+{
+    constructor() {
+        super(HellShot.speed, 75, HellShot.damage, HellShot.impactRadius);
+        this.createVisual(HellShot.sprite, HellShot.frames);
+        this.playSound('seAttack');
+    }
+}
+HellShot.nickName = '暗能量类型';
+HellShot.description = '高暗能量密度是由地狱门射出的，一发入魂。';
+HellShot.sprite = 'hellShot';
+HellShot.frames = [12];
+HellShot.speed = 2.0;
+HellShot.damage = 300;
+HellShot.impactRadius = 0.5;
+HellShot.rating = Math.log(HellShot.speed + 1) * HellShot.damage * Math.log(HellShot.impactRadius + 1);
+types.shots['HellShot'] = HellShot;
 
 /**
  * 该攻击类型只针对空中单位
@@ -63,37 +126,38 @@ class AirShot extends Shot
 {
     constructor() {
         super(AirShot.speed, 10, AirShot.damage, AirShot.impactRadius);
-        this.createVisual(AirShot.sprite, [1, 1, 1, 1], 0.2);
-        this.playSound('flak');
+        this.createVisual(AirShot.sprite, AirShot.frames);
+        this.playSound('laser');
     }
 }
-AirShot.nickName = '对空导弹';
+AirShot.nickName = '对空导弹类型';
 AirShot.description = '对空导弹';
-AirShot.sprite = 'airshot';
-AirShot.frames = 4;
+AirShot.sprite = 'laserShot';
+AirShot.frames = [1, 1, 1, 1];
 AirShot.speed = 2.5;
 AirShot.damage = 5;
 AirShot.impactRadius = 0.5;
 AirShot.rating = Math.log(AirShot.speed + 1) * AirShot.damage * Math.log(AirShot.impactRadius + 1);
-// types.shots['AirShot'] = AirShot;
+types.shots['AirShot'] = AirShot;
 
-class MGShot extends Shot
+class IceShot extends Shot
 {
     constructor() {
-        super(MGShot.speed, 25, MGShot.damage, MGShot.impactRadius);
-        this.createVisual(MGShot.sprite, [1, 1, 1, 1], 0.3);
-        this.playSound('mgnest');
+        super(IceShot.speed, 200, IceShot.damage, IceShot.impactRadius);
+        this.createVisual(IceShot.sprite, IceShot.frames);
+        this.playSound('ice');
     }
 }
-MGShot.nickName = '机枪';
-MGShot.description = '能处理掉大多数的家伙。';
-MGShot.sprite = 'mgshot';
-MGShot.frames = 4;
-MGShot.speed = 8.0;
-MGShot.damage = 2;
-MGShot.impactRadius = 0.5;
-MGShot.rating = Math.log(MGShot.speed + 1) * MGShot.damage * Math.log(MGShot.impactRadius + 1);
-// types.shots['MGShot'] = MGShot;
+IceShot.nickName = '冷冻能量体类型';
+IceShot.description = '';
+IceShot.sprite = 'iceShot';
+IceShot.frames = [4];
+IceShot.speed = 3.5;
+IceShot.damage = 15;
+IceShot.impactRadius = 0.5;
+IceShot.rating = Math.log(IceShot.speed + 1) * IceShot.damage * Math.log(IceShot.impactRadius + 1);
+types.shots['IceShot'] = IceShot;
+
 /*
 class StandardShot extends Shot
 {
@@ -131,78 +195,7 @@ FlameShot.impactRadius = 0.5;
 FlameShot.rating = Math.log(FlameShot.speed + 1) * FlameShot.damage * Math.log(FlameShot.impactRadius + 1);
 types.shots['FlameShot'] = FlameShot;
 
-class HellShot extends Shot
-{
-    constructor() {
-        super(HellShot.speed, 75, HellShot.damage, HellShot.impactRadius);
-        this.createVisual(HellShot.sprite, [12]);
-        this.playSound('hellshot');
-    }
-}
-HellShot.nickName = '能量体';
-HellShot.description = '高暗能量密度是由地狱之门射出的，它直接吸取敌人的灵魂。';
-HellShot.sprite = 'hellshot';
-HellShot.frames = 12;
-HellShot.speed = 2.0;
-HellShot.damage = 300;
-HellShot.impactRadius = 0.5;
-HellShot.rating = Math.log(HellShot.speed + 1) * HellShot.damage * Math.log(HellShot.impactRadius + 1);
-types.shots['HellShot'] = HellShot;
 
-
-class IceShot extends Shot
-{
-    constructor() {
-        super(IceShot.speed, 200, IceShot.damage, IceShot.impactRadius);
-        this.createVisual(IceShot.sprite, [4]);
-        this.playSound('icy');
-    }
-}
-IceShot.nickName = '能量体';
-IceShot.description = '一个实验性的超冷等离子体 (冷是相对的)。';
-IceShot.sprite = 'iceshot';
-IceShot.frames = 4;
-IceShot.speed = 3.5;
-IceShot.damage = 15;
-IceShot.impactRadius = 0.5;
-IceShot.rating = Math.log(IceShot.speed + 1) * IceShot.damage * Math.log(IceShot.impactRadius + 1);
-types.shots['IceShot'] = IceShot;
-
-class MGShot extends Shot
-{
-    constructor() {
-        super(MGShot.speed, 25, MGShot.damage, MGShot.impactRadius);
-        this.createVisual(MGShot.sprite, [1, 1, 1, 1], 0.3);
-        this.playSound('mgnest');
-    }
-}
-MGShot.nickName = '机枪';
-MGShot.description = '能处理掉大多数的家伙。';
-MGShot.sprite = 'mgshot';
-MGShot.frames = 4;
-MGShot.speed = 8.0;
-MGShot.damage = 2;
-MGShot.impactRadius = 0.5;
-MGShot.rating = Math.log(MGShot.speed + 1) * MGShot.damage * Math.log(MGShot.impactRadius + 1);
-types.shots['MGShot'] = MGShot;
-
-class LaserShot extends Shot
-{
-    constructor() {
-        super(LaserShot.speed, 25, LaserShot.damage, LaserShot.impactRadius);
-        this.createVisual(LaserShot.sprite, [6, 6, 6, 6]);
-        this.playSound('laser');
-    }
-}
-LaserShot.nickName = '激光';
-LaserShot.description = '中微子射击: 命中在射击之前，因为太快。';
-LaserShot.sprite = 'lasershot';
-LaserShot.frames = 24;
-LaserShot.speed = 10;
-LaserShot.damage = 7;
-LaserShot.impactRadius = 0.5;
-LaserShot.rating = Math.log(LaserShot.speed + 1) * LaserShot.damage * Math.log(LaserShot.impactRadius + 1);
-types.shots['LaserShot'] = LaserShot;
 
 class ShellShot extends Shot
 {
