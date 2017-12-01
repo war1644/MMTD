@@ -104,7 +104,7 @@ class LaserTower extends Tower
     constructor() {
         super(LaserTower.speed, 25, LaserTower.range, LaserTower.shotType);
         this.typeName = 'LaserTower';
-        this.createVisual(LaserTower.sprite, );
+        this.createVisual(LaserTower.sprite, LaserTower.frames);
     }
 }
 LaserTower.description = "";
