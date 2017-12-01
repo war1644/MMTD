@@ -85,7 +85,7 @@ class GmsUnit extends Unit
 }
 GmsUnit.speed = 6.0;
 GmsUnit.frames = [4, 4, 4, 4];
-GmsUnit.hitpoints = 400;
+GmsUnit.hitpoints = 300;
 GmsUnit.description = '';
 GmsUnit.nickName = '戈麦斯';
 GmsUnit.sprite = 'gmsUnit';
