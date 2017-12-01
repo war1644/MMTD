@@ -20,15 +20,15 @@ class MGShot extends Shot
 {
     constructor() {
         super(MGShot.speed, 25, MGShot.damage, MGShot.impactRadius);
-        this.createVisual(MGShot.sprite, [1, 1, 1, 1], 0.3);
+        this.createVisual(MGShot.sprite, MGShot.frames);
         this.playSound('mg');
     }
 }
 MGShot.nickName = '机枪类型';
 MGShot.description = '';
 MGShot.sprite = 'mgShot';
-MGShot.frames = 4;
-MGShot.speed = 8.0;
+MGShot.frames = [1];
+MGShot.speed = 6.0;
 MGShot.damage = 2;
 MGShot.impactRadius = 0.5;
 MGShot.rating = Math.log(MGShot.speed + 1) * MGShot.damage * Math.log(MGShot.impactRadius + 1);
@@ -48,7 +48,7 @@ class CannonShot extends Shot
 CannonShot.nickName = '主炮类型';
 CannonShot.description = '战斗中核心输出';
 CannonShot.sprite = 'cannonShot';
-CannonShot.frames = [6, 6, 6, 6];
+CannonShot.frames = [1];
 CannonShot.speed = 10;
 CannonShot.damage = 15;
 CannonShot.impactRadius = 0.5;
@@ -80,23 +80,23 @@ types.shots['LaserShot'] = LaserShot;
 /**
  * SE炮
  */
-// class SeShot extends Shot
-// {
-//     constructor() {
-//         super(SeShot.speed, 25, SeShot.damage, SeShot.impactRadius);
-//         this.createVisual(SeShot.sprite, SeShot.frames);
-//         this.playSound('seAttack');
-//     }
-// }
-// SeShot.nickName = 'S-E类型';
-// SeShot.description = '威力巨大';
-// SeShot.sprite = 'se';
-// SeShot.frames = [20];
-// SeShot.speed = 1.5;
-// SeShot.damage = 100;
-// SeShot.impactRadius = 0.5;
-// SeShot.rating = Math.log(SeShot.speed + 1) * SeShot.damage * Math.log(SeShot.impactRadius + 1);
-// types.shots['SeShot'] = SeShot;
+class SeShot extends Shot
+{
+    constructor() {
+        super(SeShot.speed, 25, SeShot.damage, SeShot.impactRadius);
+        this.createVisual(SeShot.sprite, SeShot.frames);
+        this.playSound('seAttack');
+    }
+}
+SeShot.nickName = 'S-E类型';
+SeShot.description = '威力巨大';
+SeShot.sprite = 'se';
+SeShot.frames = [20];
+SeShot.speed = 1.5;
+SeShot.damage = 100;
+SeShot.impactRadius = 0.5;
+SeShot.rating = Math.log(SeShot.speed + 1) * SeShot.damage * Math.log(SeShot.impactRadius + 1);
+types.shots['SeShot'] = SeShot;
 
 /**
  *
@@ -133,7 +133,7 @@ class AirShot extends Shot
 AirShot.nickName = '对空导弹类型';
 AirShot.description = '对空导弹';
 AirShot.sprite = 'laserShot';
-AirShot.frames = [1, 1, 1, 1];
+AirShot.frames = [6, 6, 6, 6];
 AirShot.speed = 2.5;
 AirShot.damage = 5;
 AirShot.impactRadius = 0.5;

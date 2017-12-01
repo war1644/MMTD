@@ -23,7 +23,7 @@ class Rock extends Tower
 }
 Rock.description = "路障，阻碍敌人路线";
 Rock.nickName = '路障';
-Rock.sprite = 'rock';
+Rock.sprite = 'rockTower';
 Rock.frames = [1];
 Rock.shotType = {};
 Rock.speed = 0;
@@ -43,7 +43,7 @@ class MG extends Tower
 MG.description = '';
 MG.nickName = '2战车';
 MG.sprite = 'mgTank';
-MG.frames = [1];
+MG.frames = [4,4,4,4];
 MG.shotType = MGShot;
 MG.speed = 4.0;
 MG.range = 4.0;
@@ -59,9 +59,9 @@ class RLA extends Tower
         this.createVisual(RLA.sprite, RLA.frames);
     }
 }
-RLA.description = "红色战车塔";
+RLA.description = "红色战车";
 RLA.nickName = '红色战车';
-RLA.sprite = 'RLA';
+RLA.sprite = 'redTank';
 RLA.frames = [4,4,4,4];
 RLA.shotType = CannonShot;
 RLA.speed = 1;
@@ -86,7 +86,7 @@ class Flak extends Tower
     }
 }
 Flak.description = '唯一的防空武器';
-Flak.nickName = '防空塔';
+Flak.nickName = '防空战车';
 Flak.sprite = 'gmsUnit';
 Flak.frames = [4, 4, 4, 4];
 Flak.shotType = AirShot;
@@ -130,7 +130,7 @@ class IceTower extends Tower
     }
 }
 IceTower.description = '';
-IceTower.nickName = '冷冻塔';
+IceTower.nickName = '冷冻战车';
 IceTower.sprite = 'iceTank';
 IceTower.frames = [4, 4, 4, 4];
 IceTower.shotType = IceShot;

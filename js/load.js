@@ -39,6 +39,10 @@ let resources = {
             name: 'laserTank',
             value: 'asset/sprites/laserTank.png'
         },
+        {
+            name: 'hellTower',
+            value: 'asset/sprites/hellGateTower.png'
+        },
 
         //unit img
         {
@@ -75,10 +79,10 @@ let resources = {
             name: 'cannonShot',
             value: 'asset/sprites/cannonShot.png'
         },
-        // {
-        //     name: 'seShot',
-        //     value: 'asset/sprites/seShot.png'
-        // },
+        {
+            name: 'seShot',
+            value: 'asset/sprites/seShot.png'
+        },
         {
             name: 'laserShot',
             value: 'asset/sprites/laserShot.png'
