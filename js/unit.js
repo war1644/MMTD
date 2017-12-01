@@ -96,11 +96,11 @@ class BlackTank extends Unit
 {
     constructor() {
         super(BlackTank.speed, 20, MazeStrategy.manhattan, BlackTank.hitpoints);
-        this.createVisual(BlackTank.sprite, [5]);
+        this.createVisual(BlackTank.sprite, BlackTank.frames);
     }
 }
 BlackTank.speed = 5.0;
-BlackTank.frames = 5;
+BlackTank.frames = [4, 4, 4, 4];
 BlackTank.hitpoints = 1000;
 BlackTank.description = '大BOSS';
 BlackTank.nickName = '黑色战车';
