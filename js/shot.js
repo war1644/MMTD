@@ -90,7 +90,7 @@ class SeShot extends Shot
 }
 SeShot.nickName = 'S-E类型';
 SeShot.description = '威力巨大';
-SeShot.sprite = 'se';
+SeShot.sprite = 'seShot';
 SeShot.frames = [20];
 SeShot.speed = 1.5;
 SeShot.damage = 100;
