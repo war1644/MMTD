@@ -66,6 +66,14 @@ let resources = {
             value: 'asset/sprites/gmsUnit.png'
         },
         {
+            name: 'lmerUnit',
+            value: 'asset/sprites/lmerUnit.png'
+        },
+        {
+            name: 'ddlsUnit',
+            value: 'asset/sprites/ddlsUnit.png'
+        },
+        {
             name: 'blackTank',
             value: 'asset/sprites/blackTank.png'
         },

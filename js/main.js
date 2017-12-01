@@ -268,7 +268,6 @@ window.onload = function() {
      * @param tower
      */
     let addTower = function(tower) {
-        console.log(tower.sprite);
         let img = images[tower.sprite];
         let div = document.createElement('button');
         div.innerHTML = [

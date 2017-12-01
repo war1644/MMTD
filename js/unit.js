@@ -76,6 +76,22 @@ SkyUnit.sprite = 'skyUnit';
 SkyUnit.rating = SkyUnit.speed * SkyUnit.hitpoints * 1.2;
 types.units['SkyUnit'] = SkyUnit;
 
+class LmerUnit extends Unit
+{
+    constructor() {
+        super(LmerUnit.speed, 80, MazeStrategy.euclideanNoSQR, LmerUnit.hitpoints);
+        this.createVisual(LmerUnit.sprite, LmerUnit.frames);
+    }
+}
+LmerUnit.speed = 2.5;
+LmerUnit.frames = [4, 4, 4, 4];
+LmerUnit.hitpoints = 150;
+LmerUnit.description = '';
+LmerUnit.nickName = '沙漠之舟';
+LmerUnit.sprite = 'lmerUnit';
+LmerUnit.rating = LmerUnit.speed * LmerUnit.hitpoints;
+types.units['LmerUnit'] = LmerUnit;
+
 class GmsUnit extends Unit
 {
     constructor() {
@@ -91,6 +107,22 @@ GmsUnit.nickName = '戈麦斯';
 GmsUnit.sprite = 'gmsUnit';
 GmsUnit.rating = GmsUnit.speed * GmsUnit.hitpoints;
 types.units['GmsUnit'] = GmsUnit;
+
+class DdlsUnit extends Unit
+{
+    constructor() {
+        super(DdlsUnit.speed, 125, MazeStrategy.euclidean, DdlsUnit.hitpoints);
+        this.createVisual(DdlsUnit.sprite, DdlsUnit.frames);
+    }
+}
+DdlsUnit.speed = 1.0;
+DdlsUnit.frames = [4, 4, 4, 4];
+DdlsUnit.hitpoints = 600;
+DdlsUnit.description = '';
+DdlsUnit.nickName = '戴达螺丝';
+DdlsUnit.sprite = 'ddlsUnit';
+DdlsUnit.rating = DdlsUnit.speed * DdlsUnit.hitpoints;
+types.units['DdlsUnit'] = DdlsUnit;
 
 class BlackTank extends Unit
 {
@@ -110,24 +142,6 @@ types.units['BlackTank'] = BlackTank;
 
 
 /*
-
-class DarkNut extends Unit
-{
-   constructor() {
-        super(DarkNut.speed, 80, MazeStrategy.euclideanNoSQR, DarkNut.hitpoints);
-        this.createVisual(DarkNut.sprite, [4, 4, 4, 4]);
-    }
-}
-DarkNut.speed = 2.5;
-DarkNut.frames = 16;
-DarkNut.hitpoints = 150;
-DarkNut.description = '小心，黑骑士速度快，并且拥有高血量。';
-DarkNut.nickName = '黑骑士';
-DarkNut.sprite = 'darknut';
-DarkNut.rating = DarkNut.speed * DarkNut.hitpoints;
-// types.units['DarkNut'] = DarkNut;
-
-
 
 class Armos extends Unit
 {
