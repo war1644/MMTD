@@ -419,7 +419,8 @@ class Unit extends GameObject
         this.health -= shot.damage;
         if (!this.dead && this.health <= 0) {
             this.health = 0;
-            game.player.addMoney(this.speed>>1);
+            let money = (this.speed>>1) < 1 ? 1 : (this.speed>>1);
+            game.player.addMoney(money);
             this.dead = true;
             this.triggerEvent(events.died, this);
             this.playDeathSound();
