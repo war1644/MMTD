@@ -69,7 +69,7 @@ class LaserShot extends Shot
 LaserShot.nickName = '激光类型';
 LaserShot.description = '';
 LaserShot.sprite = 'laserShot';
-LaserShot.frames = [6, 6, 6, 6];
+LaserShot.frames = [24];
 LaserShot.speed = 10;
 LaserShot.damage = 7;
 LaserShot.impactRadius = 0.5;
