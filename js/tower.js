@@ -121,25 +121,6 @@ IceTower.rating = IceTower.speed * Math.log(IceTower.range + 1.0) * IceTower.sho
 IceTower.cost = 9;
 types.towers['IceTower'] = IceTower;
 
-class RLA extends Tower
-{
-    constructor() {
-        super(RLA.speed, 200, RLA.range, RLA.shotType);
-        this.typeName = 'RLA';
-        this.createVisual(RLA.sprite, RLA.frames);
-    }
-}
-RLA.description = "红色战车";
-RLA.nickName = '红色战车';
-RLA.sprite = 'redTank';
-RLA.frames = [4,4,4,4];
-RLA.shotType = SeShot;
-RLA.speed = 1;
-RLA.range = 6;
-RLA.rating = ~~(RLA.speed * Math.log(RLA.range + 1.0) * RLA.shotType.rating);
-RLA.cost = ~~(RLA.rating / 6.0 + 1.0);
-types.towers['RLA'] = RLA;
-
 /**
  * 地狱门
  */
@@ -162,7 +143,24 @@ HellGate.rating = HellGate.speed * Math.log(HellGate.range + 1.0) * HellGate.sho
 HellGate.cost = 30;
 types.towers['HellGate'] = HellGate;
 
-
+class RLA extends Tower
+{
+    constructor() {
+        super(RLA.speed, 200, RLA.range, RLA.shotType);
+        this.typeName = 'RLA';
+        this.createVisual(RLA.sprite, RLA.frames);
+    }
+}
+RLA.description = "红色战车";
+RLA.nickName = '红色战车';
+RLA.sprite = 'redTank';
+RLA.frames = [4,4,4,4];
+RLA.shotType = SeShot;
+RLA.speed = 1.0;
+RLA.range = 2.0;
+RLA.rating = ~~(RLA.speed * Math.log(RLA.range + 1.0) * RLA.shotType.rating);
+RLA.cost = ~~(RLA.rating / 6.0 + 1.0);
+types.towers['RLA'] = RLA;
 
 /*
 class CanonTower extends Tower
