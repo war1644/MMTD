@@ -219,6 +219,7 @@ class Maze
     constructor(size, start, end) {
         this.gridDim = size;
         let grid = [];
+        //形成游戏地图的2维数组
         for (let i = 0; i < size.width + 1; i++) {
             let a = [];
             for (let j = 0; j < size.height; j++)
@@ -226,8 +227,10 @@ class Maze
             grid.push(a);
         }
         this.grid = grid;
+        //设置起始点
         this.start = start || new Point(0,(size.height>>1));
         this.end = end || new Point(size.width,(size.height>>1));
+
         this.pf = new PathFinder(this.grid);
         this.pf.diagonals = false;
         this.paths = {};

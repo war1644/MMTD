@@ -419,6 +419,7 @@ class Unit extends GameObject
         this.timer += FPS;
         let s = this.speed * 0.001;
         if (!this.dead && s > 0) {
+            this.updatePath();
             let sigma = this.path.propagate(s * this.timer);
             if (!sigma) {
                 this.dead = true;
