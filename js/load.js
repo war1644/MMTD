@@ -14,10 +14,10 @@
 "use strict";
 let resources = {
     images: [
-        {
-            name: 'background',
-            value: 'asset/background.jpg'
-        },
+        // {
+        //     name: 'background',
+        //     value: 'asset/background.jpg'
+        // },
         //tower img
         {
             name: 'rockTower',

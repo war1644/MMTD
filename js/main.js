@@ -114,6 +114,7 @@ let game,start;
 
 window.onload = function() {
     game = new GameLogic('game',30,15);
+
     let towerButtons = [];
     let nextwave = document.querySelector('#nextwave');
     let towerPanel = document.querySelector('#towers');
@@ -240,6 +241,7 @@ window.onload = function() {
             let mousePos = getMousePosition(evt);
             let pos = game.transformCoordinates(mousePos.x, mousePos.y);
             evt.preventDefault();
+            console.log(pos,mousePos);
             if (towerType) {
                 game.buildTower(pos, towerType);
             } else {
@@ -255,13 +257,13 @@ window.onload = function() {
         });
 
         //显示格子
-        game.canvas.addEventListener(events.mouseover, function(evt) {
-            game.view.showGrid = true;
-        });
+        // game.canvas.addEventListener(events.mouseover, function(evt) {
+        //     game.view.showGrid = true;
+        // });
         //隐藏
-        game.canvas.addEventListener(events.mouseout, function(evt) {
-            game.view.showGrid = false;
-        });
+        // game.canvas.addEventListener(events.mouseout, function(evt) {
+        //     game.view.showGrid = false;
+        // });
     };
     /**
      * 为每一种塔创建并添加一个按钮
@@ -552,6 +554,13 @@ class GameLogic extends Base
     getMazeSize() {
         return this.maze.gridDim;
     }
+
+    /**
+     * 返回格子坐标
+     * @param screenX
+     * @param screenY
+     * @returns {Point}
+     */
     transformCoordinates(screenX, screenY) {
         let x = screenX * this.maze.gridDim.width / this.view.width;
         let y = screenY * this.maze.gridDim.height / this.view.height;

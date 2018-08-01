@@ -40,7 +40,55 @@ let OS_PC = "pc",
     UNDEFINED = "undefined",
     mouseX,
     mouseY;
-let Lib = {};
+let Lib = {
+    userInfo: null,
+    /**
+     * 获取日期
+     * @returns {string}
+     */
+    getDate: () => {
+        let now = new Date(),
+            year = now.getFullYear(),       //年
+            month = now.getMonth() + 1,     //月
+            day = now.getDate(),            //日
+            hh = now.getHours(),            //时
+            mm = now.getMinutes(),          //分
+            clock = year + "-";
+        if (month < 10)
+            clock += "0";
+        clock += month + "-";
+        if (day < 10)
+            clock += "0";
+        clock += day + " ";
+        if (hh < 10)
+            clock += "0";
+        clock += hh + ":";
+        if (mm < 10) clock += '0';
+        clock += mm;
+        return (clock);
+    },
+
+    bgm: function (sound, loop = false, volume = 0.6) {
+        game.curBGM = sound;
+        sound = assets[sound];
+        let obj = new LSound(sound);
+        obj.setVolume(volume);
+        if (loop) {
+            if (game.curBGMObj) {
+                game.curBGMObj.close();
+                clearTimeout(game.timer);
+            }
+            game.timer = setTimeout(function () {
+                obj.play(0, 99);
+            }, 2000);
+            game.curBGMObj = obj;
+        } else {
+            obj.setVolume(1.0);
+            obj.play();
+        }
+    }
+};
+
 Lib.os = OS_PC;
 Lib.canTouch = false;
 Lib.ios = false;
@@ -407,7 +455,7 @@ class Unit extends GameObject
         x += (width - maxLength) * 0.5;
         ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
         ctx.fillRect(x, y - 6, maxLength, 3);
-        ctx.fillStyle = '#00ff00';
+        ctx.fillStyle = '#00cc00';
         ctx.fillRect(x, y - 6, barLength, 3);
     }
 
