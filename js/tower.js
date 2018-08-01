@@ -40,8 +40,8 @@ class MG extends Tower
         this.createVisual(MG.sprite, MG.frames);
     }
 }
-MG.description = '';
-MG.nickName = '2战车';
+MG.description = '威力小，射速快';
+MG.nickName = '机枪';
 MG.sprite = 'mgTank';
 MG.frames = [4,4,4,4];
 MG.shotType = MGShot;
@@ -66,8 +66,8 @@ class Flak extends Tower
         return target.strategy === MazeStrategy.air;
     }
 }
-Flak.description = '唯一的防空武器';
-Flak.nickName = '防空战车';
+Flak.description = '只防空，不攻击地面';
+Flak.nickName = '高射炮';
 Flak.sprite = 'gmsUnit';
 Flak.frames = [4, 4, 4, 4];
 Flak.shotType = AirShot;
@@ -88,8 +88,8 @@ class LaserTower extends Tower
         this.createVisual(LaserTower.sprite, LaserTower.frames);
     }
 }
-LaserTower.description = "";
-LaserTower.nickName = '激光战车';
+LaserTower.description = "聚能武器，中等伤害";
+LaserTower.nickName = '激光';
 LaserTower.sprite = 'laserTank';
 LaserTower.frames = [4, 4, 4, 4];
 LaserTower.shotType = LaserShot;
@@ -110,8 +110,8 @@ class IceTower extends Tower
         this.createVisual(IceTower.sprite, IceTower.frames);
     }
 }
-IceTower.description = '';
-IceTower.nickName = '冷冻战车';
+IceTower.description = '减速敌人（哈哈，还没实现）';
+IceTower.nickName = '冷冻';
 IceTower.sprite = 'iceTank';
 IceTower.frames = [4, 4, 4, 4];
 IceTower.shotType = IceShot;
@@ -132,10 +132,10 @@ class HellGate extends Tower
         this.createVisual(HellGate.sprite, HellGate.frames);
     }
 }
-HellGate.description = '';
-HellGate.nickName = '地狱门';
+HellGate.description = '超聚能武器，攻击贼高，穿透攻击，速度贼慢';
+HellGate.nickName = '核能';
 HellGate.sprite = 'hellTower';
-HellGate.frames = [6];
+HellGate.frames = [4,4,4,4];
 HellGate.shotType = HellShot;
 HellGate.speed = 1.0;
 HellGate.range = 2.0;
@@ -151,8 +151,8 @@ class RLA extends Tower
         this.createVisual(RLA.sprite, RLA.frames);
     }
 }
-RLA.description = "红色战车";
-RLA.nickName = '红色战车';
+RLA.description = "红色是因为被敌人鲜血染红的";
+RLA.nickName = 'waf';
 RLA.sprite = 'redTank';
 RLA.frames = [4,4,4,4];
 RLA.shotType = SeShot;

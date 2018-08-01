@@ -28,7 +28,7 @@ WIDTH = window.innerWidth-100;
 //游戏常量设定值
 const
     FPS = ~~(1000/30),
-    MONEY=15,
+    MONEY=150,
     HIT_POINTS=10,//血量
     MEDIPACK_COST=5,//回血初始单价
     MEDIPACK_FACTOR=1.2,//回血价格涨幅系数
@@ -319,7 +319,7 @@ window.onload = function() {
         addTowers();
         addHandlers();
         game.view.background = images.background;
-        game.view.showGrid = false;
+        game.view.showGrid = true;
         buyMedipackButton.querySelector('span').textContent = game.mediPackCost;
         buyTowerbuildButton.querySelector('span').textContent = game.towerBuildCost;
         document.querySelector('#frame').classList.remove('hidden');

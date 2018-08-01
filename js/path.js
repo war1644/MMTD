@@ -300,7 +300,7 @@ class Maze
 }
 
 /**
- * A *搜索算法的实现
+ * A* 搜索算法的实现
  */
 class PathFinder
 {

@@ -26,7 +26,6 @@ class View
         this.background = undefined;
         this.width = width || 300;
         this.height = height || 200;
-        this.showGrid = true;
         this.mazeSize = new Size(24,24);
     }
 
@@ -53,13 +52,16 @@ class View
         this.drawBackground();
         this.drawSpawn();
         this.drawHome();
-        if (this.showGrid)
+        if (this.showGrid){
             this.drawGrid();
+            // this.drawGridNum();
+        }
         for (let i = 0, n = this.visuals.length; i < n; ++i)
             this.drawVisual(this.visuals[i]);
     }
     drawBackground() {}
     drawGrid() {}
+    drawGridNum() {}
     drawHome() {}
     drawSpawn() {}
     drawVisual(element) {}
@@ -72,9 +74,6 @@ class CanvasView extends View
         this.showGrid = true;
         this.view = element;
         this.context = element.getContext('2d');
-        //单元格大小
-        this.wo = ~~(this.width / this.mazeSize.width);
-        this.ho = ~~(this.height / this.mazeSize.height);
     }
     /**
      * 该方法现在废弃
@@ -103,9 +102,8 @@ class CanvasView extends View
         if(visual.length !== 1){
             sy = visual.height * visual.direction;
         }
-        //单元格大小
-        // let wo = ~~(this.width / this.mazeSize.width);
-        // let ho = ~~(this.height / this.mazeSize.height);
+        this.wo = ~~(this.width / this.mazeSize.width);
+        this.ho = ~~(this.height / this.mazeSize.height);
         //该单元格在地图的坐标
         let dx = element.mazeCoordinates.x * this.wo;
         let dy = element.mazeCoordinates.y * this.ho;
@@ -146,7 +144,6 @@ class CanvasView extends View
         let width = this.width / this.mazeSize.width;
         let x = (this.mazeSize.width - 1) * width;
         ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
-        // ctx.fillStyle = 'rgba(255, 55, 53, 0)';
         ctx.fillRect(x, 0, width, this.height);
     }
     //敌人起点
@@ -156,7 +153,6 @@ class CanvasView extends View
         let y = ~~(this.mazeSize.height * 0.5) * this.height / this.mazeSize.height;
         let width = this.width / this.mazeSize.width;
         let height = this.height / this.mazeSize.height;
-        // ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
         ctx.fillStyle = 'rgba(255, 149, 0, 0.8)';
         ctx.beginPath();
         ctx.moveTo(x, y);
@@ -170,7 +166,6 @@ class CanvasView extends View
      */
     drawGrid() {
         let ctx = this.context;
-        // ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
         ctx.strokeStyle = 'rgba(0, 255, 247, 0.8)';
         ctx.lineWidth = 1;
         for (let i = 1, w = this.mazeSize.width; i < w; ++i) {
@@ -188,6 +183,19 @@ class CanvasView extends View
             ctx.lineTo(this.width, y);
             ctx.stroke();
             ctx.closePath();
+        }
+    }
+
+    drawGridNum(){
+        let ctx = this.context;
+        ctx.strokeStyle = 'rgba(0, 255, 247, 0.8)';
+        ctx.font = "18px serif";
+        for (let i = 1, w = this.mazeSize.width; i < w; ++i) {
+            let x = i * this.width / w;
+            for (let j = 1, h = this.mazeSize.height; j < h; ++j) {
+                let y = j * this.height / h;
+                ctx.fillText(i + ',' + (j-1), x+5, y-10);
+            }
         }
     }
 
