@@ -409,7 +409,7 @@ class Unit extends GameObject
         this.playSound('showUnit');
     }
     playDeathSound() {
-        this.playSound('cannonAttackEnd');
+        // this.playSound('cannonAttackEnd');
     }
     playVictorySound() {
         this.playSound('flee');

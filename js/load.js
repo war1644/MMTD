@@ -134,12 +134,12 @@ let resources = {
                 mp3: 'asset/audio/mg.mp3'
             }
         },
-        {
-            name: 'cannonAttackEnd',
-            value: {
-                mp3: 'asset/audio/cannonAttackEnd.wav'
-            }
-        },
+        // {
+        //     name: 'cannonAttackEnd',
+        //     value: {
+        //         mp3: 'asset/audio/cannonAttackEnd.wav'
+        //     }
+        // },
         {
             name: 'cannonAttack',
             value: {

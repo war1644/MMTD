@@ -163,7 +163,7 @@ window.onload = function() {
             ctx.drawImage(img, 0, 0, width, height, 0, 0, width, height);
             div.appendChild(icon);
             let info = document.createElement('div');
-            info.innerHTML = ['<div class=title>', unit.nickName, '</div>', '<div class=description>', unit.description, '</div>', '<div class=speed>', unit.speed, '</div>', '<div class=health>', unit.hitpoints, '</div><div style="clear:both"></div>', ].join('');
+            info.innerHTML = ['<div class=title>', unit.nickName, '</div>', '<div class=description>', unit.description, '</div>', '<div class=speed>速:', unit.speed, '</div>', '<div class=health>血:', unit.hitpoints, '</div><div style="clear:both"></div>', ].join('');
             info.classList.add('info');
             div.appendChild(info);
             nextwave.appendChild(div);
@@ -202,14 +202,14 @@ window.onload = function() {
             timeInfo.textContent = '剩' + remaining + '单位';
         });
         game.addEventListener(events.moneyChanged, function(player) {
-            moneyInfo.textContent = player.money;
+            moneyInfo.textContent = '$:'+player.money;
             buyMedipackButton.disabled = player.money < game.mediPackCost;
             buyTowerbuildButton.disabled = player.money < game.towerBuildCost;
             for (let i = 0; i < towerButtons.length; ++i)
                 towerButtons[i].element.disabled = towerButtons[i].tower.cost > player.money;
         });
         game.addEventListener(events.healthChanged, function(player) {
-            healthInfo.textContent = player.hitpoints;
+            healthInfo.textContent = '♥️:'+player.hitpoints;
         });
         game.addEventListener(events.towerBuildCostChanged, function(cost) {
             buyTowerbuildButton.querySelector('span').textContent = cost;
@@ -218,7 +218,7 @@ window.onload = function() {
             buyMedipackButton.querySelector('span').textContent = cost;
         });
         game.addEventListener(events.towerNumberChanged, function(info) {
-            towerInfo.textContent = info.current + ' / ' + info.maximum;
+            towerInfo.textContent = 'Д:'+info.current + ' / ' + info.maximum;
         });
         startWaveButton.addEventListener(events.click, function() {
             game.beginWave();
@@ -279,10 +279,10 @@ window.onload = function() {
             '<div class=title>', tower.nickName, '</div>' +
             '<div class=info>',
             '<div class=description>', tower.description, '</div>',
-            '<div class=speed>', tower.speed, '</div>',
-            '<div class=damage>', tower.shotType.damage, '</div>',
-            '<div class=range>', tower.range, '</div>',
-            '<div class=cost>', tower.cost, '</div>' +
+            '<div class=speed>速:', tower.speed, '</div>',
+            '<div class=damage>攻:', tower.shotType.damage, '</div>',
+            '<div class=range>⭕:', tower.range, '</div>',
+            '<div class=cost>$:', tower.cost, '</div>' +
             '</div>'
         ].join('');
         towerButtons.push({
