@@ -1,0 +1,276 @@
+body {
+	font: 12px Arial;
+	overflow: hidden;
+	background: #223355;
+	background-size: 100%;
+}
+
+button {
+	font: 24px Arial;
+	font-weight: bold;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background: #fff;
+	margin-right: 4%;
+	box-shadow: 0 2px 3px #000;
+	cursor: pointer;
+	float: right;
+	margin-top: -4px;
+}
+
+button:disabled {
+	cursor: none;
+	background: #ddd;
+}
+
+button:hover:not(:disabled) {
+	background: #ff6;
+}
+
+#frame {
+	/*position: absolute;*/
+	/*top: 0;*/
+	/*bottom: 0;*/
+	/*right: 0;*/
+	/*left: 0;*/
+	/*max-width: 1024px;*/
+	/*width: 100%;*/
+	/*height: 550px;*/
+	/*margin: auto;*/
+	background: rgba(255, 255, 255, 0.7);
+	padding: 8px;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 20px #def;
+}
+div#game{
+	width: 100%;
+}
+#wait {
+	font-size: 1.5em;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: #ccc no-repeat center center;
+	-o-transition: all 1s ease;
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-ms-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+#wait-message {
+	position: absolute;
+	top: 50%;
+	padding-top: 20px;
+	width: 100%;
+	left: 0;
+	text-align: center;
+	font-weight: bold;
+}
+
+.hidden {
+	display: none !important;
+    visibility: hidden;
+}
+
+#nextwave {
+	position: absolute;
+	width: 32px;
+	margin: 8px;
+	height: 450px;
+	/*overflow: none;*/
+}
+
+#nextwave > div {
+	width: 32px;
+	height: 32px;
+	margin: 10px 0;
+}
+
+#nextwave > div > .info {
+	display: none;
+	width: 100px;
+	background: white;
+	padding: 5px;
+	border: 1px solid #ccc;
+	font-size: 20px;
+}
+
+#nextwave > div:hover > .info {
+	display: block;
+}
+
+#info {
+	height: 24px;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+#info > div {
+	position: absolute;
+	height: 19px;
+	line-height: 14px;
+	padding-top: 5px;
+	font-size: 25px;
+}
+
+#info > .fontsize {
+	font-size: 10%;
+}
+
+/* #buttons {
+	text-align: center;
+} */
+
+#money-info {
+	/* background:#ff6 no-repeat left center; */
+	padding-left: 28px;
+	left: 0;
+}
+
+#time-info {
+	text-align: center;
+	left: 433px;
+}
+
+#tower-info {
+	/* background:#000  no-repeat left center; */
+	padding-left: 28px;
+	left: 100px;
+}
+
+#health-info {
+	/* background:#000  no-repeat left center; */
+	padding-left: 28px;
+	left: 200px;
+}
+
+#sound-info {
+	/* background:#000 no-repeat right center; */
+	padding-right: 28px;
+	right: 0;
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+}
+
+/* #sound-info.on {
+	background:#000 no-repeat right center;
+}
+
+#sound-info.off {
+	background:#000 no-repeat right center;
+} */
+
+#towers {
+	background: #fefefe;
+}
+
+#towers:after {
+	clear: both;
+	height: 0;
+	float: none;
+	content: '';
+}
+
+#towers > button {
+	width: 12%;
+	float: left;
+	height: 73px;
+	cursor: pointer;
+	font-weight: normal;
+	padding: 0;
+	margin: 0 0.25%;
+	background: #ddd;
+	border-radius: 0;
+	border: 1px solid #aaa;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+#towers > button:not(.selected-tower):hover {
+	background: #ccc;
+}
+
+#towers > button.selected-tower {
+	background: #ee3;
+	cursor: default;
+}
+
+.preview {
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+
+div.preview-image {
+	display: inline-block;
+}
+
+.title {
+	font-weight: bold;
+	height: 20px;
+	text-align: center;
+	font-size: 24px;
+}
+
+#towers > button > .info {
+	display: none;
+	width: 11%;
+	margin-top: -21%;
+	position: absolute;
+	background: white;
+	padding: 5px;
+	border: 1px solid #ccc;
+	color: #000;
+	font-size: 24px;
+}
+
+#towers > button:hover > .info {
+	display: block;
+}
+
+.cost, .health, .speed, .damage, .range, .rating {
+	height: 28px;
+	line-height: 28px;
+	/* padding-left: 28px; */
+	font-size: 0.9em;
+	float: left;
+	width: 50%;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.description {
+	font-size: 0.9em;
+	padding: 3px 0 7px 0;
+}
+
+.cost {
+	background: #ff6 no-repeat left center;
+}
+
+.speed {
+	background: #def no-repeat left center;
+}
+
+.damage {
+	background:#fff  no-repeat left center;
+}
+.health {
+	background:#fff  no-repeat left center;
+}
+
+.range {
+	background:#fff no-repeat left center;
+}
+
+.rating {
+	background:#fff no-repeat left center;
+}
