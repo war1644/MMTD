@@ -122,26 +122,26 @@ IceTower.cost = 9;
 types.towers['IceTower'] = IceTower;
 
 /**
- * 地狱门
+ * 巨炮
  */
-class HellGate extends Tower
+class BigGun extends Tower
 {
     constructor() {
-        super(HellGate.speed, 200, HellGate.range, HellGate.shotType);
-        this.typeName = 'HellGate';
-        this.createVisual(HellGate.sprite, HellGate.frames);
+        super(BigGun.speed, 200, BigGun.range, BigGun.shotType);
+        this.typeName = 'BigGun';
+        this.createVisual(BigGun.sprite, BigGun.frames);
     }
 }
-HellGate.description = '超聚能武器，攻击贼高，穿透攻击，速度贼慢';
-HellGate.nickName = '核能';
-HellGate.sprite = 'hellTower';
-HellGate.frames = [4,4,4,4];
-HellGate.shotType = HellShot;
-HellGate.speed = 1.0;
-HellGate.range = 2.0;
-HellGate.rating = HellGate.speed * Math.log(HellGate.range + 1.0) * HellGate.shotType.rating;
-HellGate.cost = 30;
-types.towers['HellGate'] = HellGate;
+BigGun.description = '攻击贼高，穿透攻击，速度贼慢';
+BigGun.nickName = '巨炮';
+BigGun.sprite = 'bigGun';
+BigGun.frames = [1];
+BigGun.shotType = HellShot;
+BigGun.speed = 1.0;
+BigGun.range = 2.0;
+BigGun.rating = BigGun.speed * Math.log(BigGun.range + 1.0) * BigGun.shotType.rating;
+BigGun.cost = 30;
+types.towers['BigGun'] = BigGun;
 
 class RLA extends Tower
 {
@@ -151,8 +151,8 @@ class RLA extends Tower
         this.createVisual(RLA.sprite, RLA.frames);
     }
 }
-RLA.description = "红色是因为被敌人鲜血染红的";
-RLA.nickName = 'waf';
+RLA.description = "敌人鲜血染红的战车";
+RLA.nickName = '收割';
 RLA.sprite = 'redTank';
 RLA.frames = [4,4,4,4];
 RLA.shotType = SeShot;

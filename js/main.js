@@ -120,12 +120,12 @@ window.onload = function() {
     let towerPanel = document.querySelector('#towers');
     let moneyInfo = document.querySelector('#money-info');
     let healthInfo = document.querySelector('#health-info');
-    let towerInfo = document.querySelector('#tower-info');
+    // let towerInfo = document.querySelector('#tower-info');
     let timeInfo = document.querySelector('#time-info');
     let soundInfo = document.querySelector('#sound-info');
     let startWaveButton = document.querySelector('#startWave');
-    let buyMedipackButton = document.querySelector('#buyMedipack');
-    let buyTowerbuildButton = document.querySelector('#buyTowerbuild');
+    // let buyMedipackButton = document.querySelector('#buyMedipack');
+    // let buyTowerbuildButton = document.querySelector('#buyTowerbuild');
     let towerType = undefined;
     /**
      * 获取点击的相对坐标
@@ -163,7 +163,7 @@ window.onload = function() {
             ctx.drawImage(img, 0, 0, width, height, 0, 0, width, height);
             div.appendChild(icon);
             let info = document.createElement('div');
-            info.innerHTML = ['<div class=title>', unit.nickName, '</div>', '<div class=description>', unit.description, '</div>', '<div class=speed>速:', unit.speed, '</div>', '<div class=health>血:', unit.hitpoints, '</div><div style="clear:both"></div>', ].join('');
+            info.innerHTML = ['<div class=title>', unit.nickName, '</div>', '<div class=description>', unit.description, '</div>', '<div class=speed>速:', unit.speed, '</div>', '<div class=health>♥:', unit.hitpoints, '</div><div style="clear:both"></div>', ].join('');
             info.classList.add('info');
             div.appendChild(info);
             nextwave.appendChild(div);
@@ -187,7 +187,7 @@ window.onload = function() {
             delete localStorage.towerDefense;
             timeInfo.textContent = '游戏结束';
             alert('loser! 刷新重来吧.');
-            location.href = location.href;
+            location.reload();
         });
 
         //开始一波新的
@@ -203,32 +203,33 @@ window.onload = function() {
         });
         game.addEventListener(events.moneyChanged, function(player) {
             moneyInfo.textContent = '$:'+player.money;
-            buyMedipackButton.disabled = player.money < game.mediPackCost;
-            buyTowerbuildButton.disabled = player.money < game.towerBuildCost;
-            for (let i = 0; i < towerButtons.length; ++i)
+        //     buyMedipackButton.disabled = player.money < game.mediPackCost;
+        //     buyTowerbuildButton.disabled = player.money < game.towerBuildCost;
+            let len = towerButtons.length;
+            for (let i = 0; i < len; ++i)
                 towerButtons[i].element.disabled = towerButtons[i].tower.cost > player.money;
         });
         game.addEventListener(events.healthChanged, function(player) {
             healthInfo.textContent = '♥️:'+player.hitpoints;
         });
-        game.addEventListener(events.towerBuildCostChanged, function(cost) {
-            buyTowerbuildButton.querySelector('span').textContent = cost;
-        });
-        game.addEventListener(events.mediPackCostChanged, function(cost) {
-            buyMedipackButton.querySelector('span').textContent = cost;
-        });
-        game.addEventListener(events.towerNumberChanged, function(info) {
-            towerInfo.textContent = 'Д:'+info.current + ' / ' + info.maximum;
-        });
+        // game.addEventListener(events.towerBuildCostChanged, function(cost) {
+        //     buyTowerbuildButton.querySelector('span').textContent = cost;
+        // });
+        // game.addEventListener(events.mediPackCostChanged, function(cost) {
+        //     buyMedipackButton.querySelector('span').textContent = cost;
+        // });
+        // game.addEventListener(events.towerNumberChanged, function(info) {
+        //     towerInfo.textContent = 'Д:'+info.current + ' / ' + info.maximum;
+        // });
         startWaveButton.addEventListener(events.click, function() {
             game.beginWave();
         });
-        buyMedipackButton.addEventListener(events.click, function() {
-            game.buyMediPack();
-        });
-        buyTowerbuildButton.addEventListener(events.click, function() {
-            game.buyTowerBuildRight();
-        });
+        // buyMedipackButton.addEventListener(events.click, function() {
+        //     game.buyMediPack();
+        // });
+        // buyTowerbuildButton.addEventListener(events.click, function() {
+        //     game.buyTowerBuildRight();
+        // });
         soundInfo.addEventListener(events.click, function() {
             let on = 'on';
             let off = 'off';
@@ -249,6 +250,7 @@ window.onload = function() {
             }
         });
         //鼠标右键事件
+        //todo 手机端咋搞？
         game.canvas.addEventListener(events.contextmenu, function(evt) {
             let mousePos = getMousePosition(evt);
             let pos = game.transformCoordinates(mousePos.x, mousePos.y);
@@ -272,6 +274,9 @@ window.onload = function() {
     let addTower = function(tower) {
         let img = images[tower.sprite];
         let div = document.createElement('button');
+        // if(img.frames.length===1){
+        //
+        // }
         div.innerHTML = [
             '<div class=preview>' +
             '<div style="background: url(', img.src, ') no-repeat; width: ', ~~(img.naturalWidth / tower.frames[0]), 'px; height: ', ~~(img.naturalHeight / tower.frames.length), 'px" class="preview-image"></div>' +
@@ -315,13 +320,13 @@ window.onload = function() {
     };
 
     //资源载入完成
-    let completed = function(e) {
+    let completed = (e)=>{
         addTowers();
         addHandlers();
         game.view.background = images.background;
         game.view.showGrid = true;
-        buyMedipackButton.querySelector('span').textContent = game.mediPackCost;
-        buyTowerbuildButton.querySelector('span').textContent = game.towerBuildCost;
+        // buyMedipackButton.querySelector('span').textContent = game.mediPackCost;
+        // buyTowerbuildButton.querySelector('span').textContent = game.towerBuildCost;
         document.querySelector('#frame').classList.remove('hidden');
         document.querySelector('#wait').classList.add('hidden');
         startMusic();
@@ -337,7 +342,7 @@ window.onload = function() {
         updateNextWave();
     };
     //显示载入进度
-    let progress = function(e) {
+    let progress = (e)=>{
         document.querySelector('#wait-message').textContent = '载入中 (' + e.name + ', ' + ~~(e.progress * 100) + '% of ' + e.total + ')';
     };
     let loader = new Loader(completed,progress);
@@ -370,9 +375,9 @@ class GameLogic extends Base
         me.shots = [];
         me.mediPackCost = MEDIPACK_COST;
         me.mediPackFactor = MEDIPACK_FACTOR;
-        me.towerBuildCost = TOWER_BUILD_COST;
+        // me.towerBuildCost = TOWER_BUILD_COST;
         me.towerBuildFactor = TOWER_BUILD_FACTOR;
-        me.maxTowerNumber = TOWER_BUILD_NUMBER;
+        // me.maxTowerNumber = TOWER_BUILD_NUMBER;
         me.mediPackHealth = MEDIPACK_HEALTH;
         me.canvas = this.createCanvas(id,WIDTH,HEIGHT);
         me.view = new CanvasView(me.canvas);
@@ -383,14 +388,14 @@ class GameLogic extends Base
         me.view.mazeSize = me.getMazeSize();
         me.waves = new WaveList();
         me.currentWave = new Wave();
-        me.player.addEventListener(events.playerDefeated, function(e) {
+        me.player.addEventListener(events.playerDefeated, (e)=>{
             me.triggerEvent(events.playerDefeated, e);
             me.finish();
         });
-        me.player.addEventListener(events.moneyChanged, function(e) {
+        me.player.addEventListener(events.moneyChanged, (e)=> {
             me.triggerEvent(events.moneyChanged, e);
         });
-        me.player.addEventListener(events.healthChanged, function(e) {
+        me.player.addEventListener(events.healthChanged, (e)=> {
             me.triggerEvent(events.healthChanged, e);
         });
         me.registerEvent(events.refreshed);
@@ -401,9 +406,9 @@ class GameLogic extends Base
         me.registerEvent(events.healthChanged);
         me.registerEvent(events.waveCreated);
         me.registerEvent(events.unitSpawned);
-        me.registerEvent(events.towerNumberChanged);
-        me.registerEvent(events.towerBuildCostChanged);
-        me.registerEvent(events.mediPackCostChanged);
+        // me.registerEvent(events.towerNumberChanged);
+        // me.registerEvent(events.towerBuildCostChanged);
+        // me.registerEvent(events.mediPackCostChanged);
     }
     /**
      * 创建canvas 游戏窗口
@@ -425,10 +430,10 @@ class GameLogic extends Base
             //初始化玩家数据
             this.player.setHitpoints(HIT_POINTS);
             this.player.setMoney(MONEY);
-            this.triggerEvent(events.towerNumberChanged, {
-                current: this.getNumShooting(),
-                maximum: this.maxTowerNumber
-            });
+            // this.triggerEvent(events.towerNumberChanged, {
+            //     current: this.getNumShooting(),
+            //     maximum: this.maxTowerNumber
+            // });
             this.state = GameState.building;
         }
         this.restart();
@@ -437,7 +442,7 @@ class GameLogic extends Base
         if (!this.gameLoop) {
             let me = this;
             let lastTime,then=0;
-            me.gameLoop = function() {
+            me.gameLoop = ()=>{
                 let now = Date.now();
                 lastTime = now - then;
                 if (lastTime>FPS){
@@ -483,9 +488,9 @@ class GameLogic extends Base
         return {
             mediPackCost: this.mediPackCost,
             mediPackFactor: this.mediPackFactor,
-            towerBuildCost: this.towerBuildCost,
+            // towerBuildCost: this.towerBuildCost,
             towerBuildFactor: this.towerBuildFactor,
-            towerBuildNumber: this.maxTowerNumber,
+            // towerBuildNumber: this.maxTowerNumber,
             hitpoints: this.player.hitpoints,
             money: this.player.money,
             points: this.player.points,
@@ -513,8 +518,8 @@ class GameLogic extends Base
         this.player.points = state.points;
         this.player.name = state.playerName;
         this.setMediPackCost(state.mediPackCost);
-        this.setTowerBuildCost(state.towerBuildCost);
-        this.setMaxTowerNumber(state.towerBuildNumber);
+        // this.setTowerBuildCost(state.towerBuildCost);
+        // this.setMaxTowerNumber(state.towerBuildNumber);
         this.player.setHitpoints(state.hitpoints);
         this.player.setMoney(state.money);
         this.waves.index = state.wave;
@@ -641,27 +646,28 @@ class GameLogic extends Base
     /**
      * 建造防御塔
      * @param pt
-     * @param type
+     * @param towerType
      * @returns {boolean}
      */
-    buildTower(pt, type) {
-        let newTower = new type();
-        let isrock = newTower instanceof Rock;
-        let numShooting = this.getNumShooting();
+    buildTower(pt, towerType) {
+        let newTower = new towerType();
+        // let isrock = newTower instanceof Rock;
+        // let numShooting = this.getNumShooting();
         //this.state === GameState.building && 任意状态都可以建造
-        if (type.cost <= this.player.money && (isrock || (numShooting < this.maxTowerNumber))) {
+        // || (numShooting < this.maxTowerNumber) 不再计算塔数量
+        if (towerType.cost <= this.player.money) {
             //设置塔坐标
             newTower.mazeCoordinates = pt;
-            newTower.cost = type.cost;
+            newTower.cost = towerType.cost;
             if (this.maze.tryBuild(pt, newTower.mazeWeight)) {
-                this.player.addMoney(-type.cost);
+                this.player.addMoney(-towerType.cost);
                 this.addTower(newTower);
-                if (!isrock) {
-                    this.triggerEvent(events.towerNumberChanged, {
-                        current: numShooting + 1,
-                        maximum: this.maxTowerNumber,
-                    });
-                }
+                // if (!isrock) {
+                    // this.triggerEvent(events.towerNumberChanged, {
+                    //     current: numShooting + 1,
+                    //     maximum: this.maxTowerNumber,
+                    // });
+                // }
                 return true;
             }
         }
@@ -675,19 +681,19 @@ class GameLogic extends Base
     destroyTower(pt) {
         //任意状态都可以删除塔
         // if (this.state == GameState.building) {
-            let towerToRemove = this.towers.filter(function(t) {
+            let towerToRemove = this.towers.filter((t)=>{
                 return t.mazeCoordinates.x === pt.x && t.mazeCoordinates.y === pt.y;
             })[0];
             if (towerToRemove) {
                 this.player.addMoney(0.5 * towerToRemove.cost);
                 this.removeTower(towerToRemove);
                 this.maze.tryRemove(pt);
-                if (!(towerToRemove instanceof Rock)) {
-                    this.triggerEvent(events.towerNumberChanged, {
-                        current: this.getNumShooting(),
-                        maximum: this.maxTowerNumber,
-                    });
-                }
+                // if (!(towerToRemove instanceof Rock)) {
+                    // this.triggerEvent(events.towerNumberChanged, {
+                    //     current: this.getNumShooting(),
+                    //     maximum: this.maxTowerNumber,
+                    // });
+                // }
             }
         // }
     }
@@ -695,42 +701,42 @@ class GameLogic extends Base
      * 购买生命
      * @returns {boolean}
      */
-    buyMediPack() {
-        let cost = this.mediPackCost;
-        if (this.player.money >= cost) {
-            this.player.addHitpoints(this.mediPackHealth);
-            this.setMediPackCost(~~(this.mediPackFactor * cost));
-            this.player.addMoney(-cost);
-            return true;
-        }
-        return false;
-    }
-    buyTowerBuildRight() {
-        let cost = this.towerBuildCost;
-        if (this.player.money >= cost) {
-            this.setMaxTowerNumber(this.maxTowerNumber + 1);
-            this.setTowerBuildCost(~~(this.towerBuildFactor * cost));
-            this.player.addMoney(-cost);
-            return true;
-        }
-        return false;
-    }
-    setMediPackCost(cost) {
-        this.mediPackCost = cost;
-        this.triggerEvent(events.mediPackCostChanged, cost);
-    }
-    setTowerBuildCost(cost) {
-        this.towerBuildCost = cost;
-        this.triggerEvent(events.towerBuildCostChanged, cost);
-    }
-    setMaxTowerNumber(number) {
-        let numShooting = this.getNumShooting();
-        this.maxTowerNumber = number;
-        this.triggerEvent(events.towerNumberChanged, {
-            current: numShooting,
-            maximum: number,
-        });
-    }
+    // buyMediPack() {
+    //     let cost = this.mediPackCost;
+    //     if (this.player.money >= cost) {
+    //         this.player.addHitpoints(this.mediPackHealth);
+    //         this.setMediPackCost(~~(this.mediPackFactor * cost));
+    //         this.player.addMoney(-cost);
+    //         return true;
+    //     }
+    //     return false;
+    // }
+    // buyTowerBuildRight() {
+    //     let cost = this.towerBuildCost;
+    //     if (this.player.money >= cost) {
+    //         this.setMaxTowerNumber(this.maxTowerNumber + 1);
+    //         this.setTowerBuildCost(~~(this.towerBuildFactor * cost));
+    //         this.player.addMoney(-cost);
+    //         return true;
+    //     }
+    //     return false;
+    // }
+    // setMediPackCost(cost) {
+    //     this.mediPackCost = cost;
+    //     this.triggerEvent(events.mediPackCostChanged, cost);
+    // }
+    // setTowerBuildCost(cost) {
+    //     this.towerBuildCost = cost;
+    //     this.triggerEvent(events.towerBuildCostChanged, cost);
+    // }
+    // setMaxTowerNumber(number) {
+    //     let numShooting = this.getNumShooting();
+    //     this.maxTowerNumber = number;
+    //     this.triggerEvent(events.towerNumberChanged, {
+    //         current: numShooting,
+    //         maximum: number,
+    //     });
+    // }
 }
 
 class WaveList

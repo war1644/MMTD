@@ -14,7 +14,7 @@
 "use strict";
 // 页面重绘前，通知浏览器调用一个指定的函数
 // 具体看https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame
-window._requestAnimFrame = (function() {
+window._requestAnimFrame = (()=>{
         return  window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
@@ -547,8 +547,23 @@ class Sound {
             }
         };
         me.element.addEventListener('ended', ended);
-        if (Sound.enabled)
-            me.element.play();
+        if (Sound.enabled){
+            let playPromise = me.element.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started!
+                    // Show playing UI.
+                })
+                    .catch(error => {
+                        console.log(error);
+                        me.element.pause();
+                        // me.element.play();
+                        // Auto-play was prevented
+                        // Show paused UI.
+                    });
+            }
+        }
+
     }
 
     static createAudio(src) {
@@ -613,6 +628,8 @@ Sound.channels = 6;
 Sound.active = 0;
 Sound.sounds = [];
 Sound.enabled = true;
+
+
 /*Sound.createAudio = function (src) {
     let d;
     Sound.active++;
