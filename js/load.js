@@ -41,7 +41,7 @@ let resources = {
         },
         {
             name: 'bigGun',
-            value: 'asset/sprites/bigGun.jpeg'
+            value: 'asset/sprites/hellGateTower.png'
         },
 
         //unit img

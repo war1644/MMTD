@@ -19,23 +19,23 @@
 "use strict";
 
 let
-    HEIGHT=450,
-    WIDTH=900;
+    HEIGHT = 450,
+    WIDTH = 900;
 //TODO：移动端后续还要再优化
-HEIGHT = ~~(window.innerHeight/1.3);
-WIDTH = window.innerWidth-100;
+HEIGHT = window.innerHeight - 140;
+WIDTH = window.innerWidth - 100;
 
 //游戏常量设定值
 const
-    FPS = ~~(1000/30),
-    MONEY=20,
-    HIT_POINTS=10,//血量
-    MEDIPACK_COST=5,//回血初始单价
-    MEDIPACK_FACTOR=1.2,//回血价格涨幅系数
-    MEDIPACK_HEALTH=1,//回血量
-    TOWER_BUILD_COST=5,//最大建造数单价
-    TOWER_BUILD_FACTOR=1.5,//最大建造单价涨幅系数
-    TOWER_BUILD_NUMBER=4;//初始最大建造单价涨幅系数
+    FPS = ~~(1000 / 30),
+    MONEY = 20,
+    HIT_POINTS = 10,//血量
+    MEDIPACK_COST = 5,//回血初始单价
+    MEDIPACK_FACTOR = 1.2,//回血价格涨幅系数
+    MEDIPACK_HEALTH = 1,//回血量
+    TOWER_BUILD_COST = 5,//最大建造数单价
+    TOWER_BUILD_FACTOR = 1.5,//最大建造单价涨幅系数
+    TOWER_BUILD_NUMBER = 4;//初始最大建造单价涨幅系数
 let images = {};
 let sounds = {};
 /**
@@ -110,10 +110,10 @@ let Steps = {
     OnlyStraight: [[0, -1], [1, 0], [0, 1], [-1, 0]],
 };
 
-let game,start;
+let game, start;
 
-window.onload = function() {
-    game = new GameLogic('game',30,15);
+window.onload = function () {
+    game = new GameLogic('game', 30, 15);
 
     let towerButtons = [];
     let nextwave = document.querySelector('#nextwave');
@@ -132,7 +132,7 @@ window.onload = function() {
      * @param evt
      * @returns {{x: number, y: number}}
      */
-    let getMousePosition = function(evt) {
+    let getMousePosition = function (evt) {
         let rect = game.canvas.getBoundingClientRect();
         return {
             x: evt.clientX - rect.left,
@@ -142,7 +142,7 @@ window.onload = function() {
     /**
      * 绘制下一波敌人ICO到界面
      */
-    let updateNextWave = function() {
+    let updateNextWave = function () {
         nextwave.innerHTML = '';
         let names = game.waves.nextOpponents();
         let scale = 1;
@@ -154,16 +154,16 @@ window.onload = function() {
             let icon = document.createElement('canvas');
             let width = ~~(img.width / unit.frames[0]);
             let height = ~~(img.height / unit.frames.length);
-            icon.width = width*scale;
-            icon.height = height*scale;
+            icon.width = width * scale;
+            icon.height = height * scale;
             // let targetHeight = img.height > 32 ? 32 : img.height;
             // let targetWidth = ~~(width * targetHeight / img.height);
             let ctx = icon.getContext('2d');
-            ctx.scale(scale,scale);
+            ctx.scale(scale, scale);
             ctx.drawImage(img, 0, 0, width, height, 0, 0, width, height);
             div.appendChild(icon);
             let info = document.createElement('div');
-            info.innerHTML = ['<div class=title>', unit.nickName, '</div>', '<div class=description>', unit.description, '</div>', '<div class=speed>速:', unit.speed, '</div>', '<div class=health>♥:', unit.hitpoints, '</div><div style="clear:both"></div>', ].join('');
+            info.innerHTML = ['<div class=title>', unit.nickName, '</div>', '<div class=description>', unit.description, '</div>', '<div class=speed>速:', unit.speed, '</div>', '<div class=health>♥:', unit.hitpoints, '</div><div style="clear:both"></div>',].join('');
             info.classList.add('info');
             div.appendChild(info);
             nextwave.appendChild(div);
@@ -172,17 +172,17 @@ window.onload = function() {
     /**
      * 添加事件绑定触发
      */
-    let addHandlers = function() {
-        game.addEventListener(events.waveFinished, function() {
+    let addHandlers = function () {
+        game.addEventListener(events.waveFinished, function () {
             timeInfo.textContent = '本波结束';
         });
-        game.addEventListener(events.waveDefeated, function() {
+        game.addEventListener(events.waveDefeated, function () {
             timeInfo.textContent = '游戏已保存';
             startWaveButton.disabled = false;
             localStorage.towerDefense = JSON.stringify(game.saveState());
             updateNextWave();
         });
-        game.addEventListener(events.playerDefeated, function() {
+        game.addEventListener(events.playerDefeated, function () {
             //清除存档
             delete localStorage.towerDefense;
             timeInfo.textContent = '游戏结束';
@@ -191,26 +191,26 @@ window.onload = function() {
         });
 
         //开始一波新的
-        game.addEventListener(events.waveCreated, function(wave) {
+        game.addEventListener(events.waveCreated, function (wave) {
             timeInfo.textContent = wave.units.length + '单位';
             //开始按钮提示波数+1
             startWaveButton.querySelector('span').textContent = (wave.index + 1);
             //不可点击
             startWaveButton.disabled = true;
         });
-        game.addEventListener(events.unitSpawned, function(remaining) {
+        game.addEventListener(events.unitSpawned, function (remaining) {
             timeInfo.textContent = '剩' + remaining + '单位';
         });
-        game.addEventListener(events.moneyChanged, function(player) {
-            moneyInfo.textContent = '$:'+player.money;
-        //     buyMedipackButton.disabled = player.money < game.mediPackCost;
-        //     buyTowerbuildButton.disabled = player.money < game.towerBuildCost;
+        game.addEventListener(events.moneyChanged, function (player) {
+            moneyInfo.textContent = '$:' + player.money;
+            //     buyMedipackButton.disabled = player.money < game.mediPackCost;
+            //     buyTowerbuildButton.disabled = player.money < game.towerBuildCost;
             let len = towerButtons.length;
             for (let i = 0; i < len; ++i)
                 towerButtons[i].element.disabled = towerButtons[i].tower.cost > player.money;
         });
-        game.addEventListener(events.healthChanged, function(player) {
-            healthInfo.textContent = '♥️:'+player.hitpoints;
+        game.addEventListener(events.healthChanged, function (player) {
+            healthInfo.textContent = '♥️:' + player.hitpoints;
         });
         // game.addEventListener(events.towerBuildCostChanged, function(cost) {
         //     buyTowerbuildButton.querySelector('span').textContent = cost;
@@ -221,7 +221,7 @@ window.onload = function() {
         // game.addEventListener(events.towerNumberChanged, function(info) {
         //     towerInfo.textContent = 'Д:'+info.current + ' / ' + info.maximum;
         // });
-        startWaveButton.addEventListener(events.click, function() {
+        startWaveButton.addEventListener(events.click, function () {
             game.beginWave();
         });
         // buyMedipackButton.addEventListener(events.click, function() {
@@ -230,7 +230,7 @@ window.onload = function() {
         // buyTowerbuildButton.addEventListener(events.click, function() {
         //     game.buyTowerBuildRight();
         // });
-        soundInfo.addEventListener(events.click, function() {
+        soundInfo.addEventListener(events.click, function () {
             let on = 'on';
             let off = 'off';
             let status = this.classList.contains('on');
@@ -238,11 +238,11 @@ window.onload = function() {
             this.classList.add(status ? off : on);
             Sound.setVolume(status ? 0 : 1);
         });
-        game.canvas.addEventListener(events.click, function(evt) {
+        game.canvas.addEventListener(events.click, function (evt) {
             let mousePos = getMousePosition(evt);
             let pos = game.transformCoordinates(mousePos.x, mousePos.y);
             evt.preventDefault();
-            console.log(pos,mousePos);
+            console.log(pos, mousePos);
             if (towerType) {
                 game.buildTower(pos, towerType);
             } else {
@@ -251,7 +251,7 @@ window.onload = function() {
         });
         //鼠标右键事件
         //todo 手机端咋搞？
-        game.canvas.addEventListener(events.contextmenu, function(evt) {
+        game.canvas.addEventListener(events.contextmenu, function (evt) {
             let mousePos = getMousePosition(evt);
             let pos = game.transformCoordinates(mousePos.x, mousePos.y);
             evt.preventDefault();
@@ -271,7 +271,7 @@ window.onload = function() {
      * 为每一种塔创建并添加一个按钮
      * @param tower
      */
-    let addTower = function(tower) {
+    let addTower = function (tower) {
         let img = images[tower.sprite];
         let div = document.createElement('button');
         // if(img.frames.length===1){
@@ -294,33 +294,33 @@ window.onload = function() {
             tower: tower,
             element: div
         });
-        div.addEventListener(events.click, function() {
+        div.addEventListener(events.click, function () {
             towerType = tower;
-            for (let i = towerButtons.length; i--;){
+            for (let i = towerButtons.length; i--;) {
                 towerButtons[i].element.classList.remove('selected-tower');
             }
             this.classList.add('selected-tower');
         });
         towerPanel.appendChild(div);
     };
-    let addTowers = function() {
+    let addTowers = function () {
         for (let key in types.towers) {
             addTower(types.towers[key]);
         }
     };
-    let startMusic = function() {
+    let startMusic = function () {
         let music = sounds['theme'];
         if (music) {
-            let sound = new Sound(music,true);
+            let sound = new Sound(music, true);
             sound.setVolume(0.3);
             sound.play();
-        } else{
+        } else {
             soundInfo.classList.add('hidden');
         }
     };
 
     //资源载入完成
-    let completed = (e)=>{
+    let completed = (e) => {
         addTowers();
         addHandlers();
         game.view.background = images.background;
@@ -342,10 +342,10 @@ window.onload = function() {
         updateNextWave();
     };
     //显示载入进度
-    let progress = (e)=>{
+    let progress = (e) => {
         document.querySelector('#wait-message').textContent = '载入中 (' + e.name + ', ' + ~~(e.progress * 100) + '% of ' + e.total + ')';
     };
-    let loader = new Loader(completed,progress);
+    let loader = new Loader(completed, progress);
     loader.set('Images', ImageLoader, images, resources.images);
     loader.set('Sounds', SoundLoader, sounds, resources.sounds);
     //执行载入
@@ -359,8 +359,7 @@ window.onload = function() {
  *
  * @type {void|*}
  */
-class GameLogic extends Base
-{
+class GameLogic extends Base {
     /**
      *
      * @param id
@@ -379,23 +378,23 @@ class GameLogic extends Base
         me.towerBuildFactor = TOWER_BUILD_FACTOR;
         // me.maxTowerNumber = TOWER_BUILD_NUMBER;
         me.mediPackHealth = MEDIPACK_HEALTH;
-        me.canvas = this.createCanvas(id,WIDTH,HEIGHT);
+        me.canvas = this.createCanvas(id, WIDTH, HEIGHT);
         me.view = new CanvasView(me.canvas);
         me.player = new Player();
         me.state = GameState.unstarted;
         //初始化战场
-        me.maze = new Maze(new Size(mazeWidth || 20,mazeHeight || 11));
+        me.maze = new Maze(new Size(mazeWidth || 20, mazeHeight || 11));
         me.view.mazeSize = me.getMazeSize();
         me.waves = new WaveList();
         me.currentWave = new Wave();
-        me.player.addEventListener(events.playerDefeated, (e)=>{
+        me.player.addEventListener(events.playerDefeated, (e) => {
             me.triggerEvent(events.playerDefeated, e);
             me.finish();
         });
-        me.player.addEventListener(events.moneyChanged, (e)=> {
+        me.player.addEventListener(events.moneyChanged, (e) => {
             me.triggerEvent(events.moneyChanged, e);
         });
-        me.player.addEventListener(events.healthChanged, (e)=> {
+        me.player.addEventListener(events.healthChanged, (e) => {
             me.triggerEvent(events.healthChanged, e);
         });
         me.registerEvent(events.refreshed);
@@ -416,11 +415,11 @@ class GameLogic extends Base
      * @param width
      * @param height
      */
-    createCanvas(id,width,height) {
+    createCanvas(id, width, height) {
         let str = `<canvas id="${id}_canvas" width=${width} height=${height} style="margin: 8px auto; display: block;"><p><b>浏览器不支持canvas.</b></p></canvas>`;
-        let dom = document.querySelector('#'+id);
+        let dom = document.querySelector('#' + id);
         dom.innerHTML = str;
-        return document.querySelector('#'+id+ '_canvas');
+        return document.querySelector('#' + id + '_canvas');
     }
     /**
      * 入口函数
@@ -441,15 +440,15 @@ class GameLogic extends Base
     restart() {
         if (!this.gameLoop) {
             let me = this;
-            let lastTime,then=0;
-            me.gameLoop = ()=>{
+            let lastTime, then = 0;
+            me.gameLoop = () => {
                 let now = Date.now();
                 lastTime = now - then;
-                if (lastTime>FPS){
+                if (lastTime > FPS) {
                     me.view.draw();
                     me.tick();
-                    then = now - (lastTime%FPS);
-            }
+                    then = now - (lastTime % FPS);
+                }
                 window._requestAnimFrame(me.gameLoop);
             };
             me.gameLoop();
@@ -506,7 +505,7 @@ class GameLogic extends Base
             let type = types.towers[state.towers[i].type];
             let tower = new type();
             let point = state.towers[i].point;
-            let pt = new Point(point.x,point.y);
+            let pt = new Point(point.x, point.y);
             if (this.maze.tryBuild(pt, tower.mazeWeight)) {
                 tower.mazeCoordinates = pt;
                 tower.cost = type.cost;
@@ -517,7 +516,7 @@ class GameLogic extends Base
         this.towerBuildFactor = state.towerBuildFactor;
         this.player.points = state.points;
         this.player.name = state.playerName;
-        this.setMediPackCost(state.mediPackCost);
+        // this.setMediPackCost(state.mediPackCost);
         // this.setTowerBuildCost(state.towerBuildCost);
         // this.setMaxTowerNumber(state.towerBuildNumber);
         this.player.setHitpoints(state.hitpoints);
@@ -526,7 +525,7 @@ class GameLogic extends Base
         this.state = state.state;
     }
     update(objects) {
-        for (let i = objects.length; i--; )
+        for (let i = objects.length; i--;)
             objects[i].update();
     }
     tick() {
@@ -539,7 +538,7 @@ class GameLogic extends Base
             this.update(this.units);
             this.removeDeadObjects();
             let newUnits = this.currentWave.update();
-            for (let i = newUnits.length; i--; ) {
+            for (let i = newUnits.length; i--;) {
                 let unit = newUnits[i];
                 let path = this.maze.getPath(unit.strategy);
                 unit.mazeCoordinates = this.maze.start;
@@ -552,7 +551,7 @@ class GameLogic extends Base
         this.state = GameState.finished;
     }
     getNumShooting() {
-        return this.towers.filter(function(tower) {
+        return this.towers.filter(function (tower) {
             return (tower instanceof Rock) === false;
         }).length;
     }
@@ -569,7 +568,7 @@ class GameLogic extends Base
     transformCoordinates(screenX, screenY) {
         let x = screenX * this.maze.gridDim.width / this.view.width;
         let y = screenY * this.maze.gridDim.height / this.view.height;
-        return new Point(~~x,~~y);
+        return new Point(~~x, ~~y);
     }
     removeTower(tower) {
         tower.removeEventListener(events.shot);
@@ -579,7 +578,7 @@ class GameLogic extends Base
     addTower(tower) {
         let me = this;
         tower.targets = me.units;
-        tower.addEventListener(events.shot, function(shot) {
+        tower.addEventListener(events.shot, function (shot) {
             me.addShot(shot);
         });
         me.towers.push(tower);
@@ -591,7 +590,7 @@ class GameLogic extends Base
     }
     addUnit(unit) {
         let me = this;
-        unit.addEventListener(events.accomplished, function(unt) {
+        unit.addEventListener(events.accomplished, function (unt) {
             me.player.hit(unt);
         });
         unit.playInitSound();
@@ -599,7 +598,7 @@ class GameLogic extends Base
         me.view.add(unit);
     }
     removeDead(objects) {
-        for (let i = objects.length; i--; ) {
+        for (let i = objects.length; i--;) {
             if (objects[i].dead) {
                 this.view.remove(objects[i]);
                 objects.splice(i, 1);
@@ -619,7 +618,7 @@ class GameLogic extends Base
     endWave() {
         // this.player.addMoney(this.currentWave.prizeMoney);
         this.state = GameState.building;
-        for (let i = this.shots.length; i--; ) {
+        for (let i = this.shots.length; i--;) {
             this.view.remove(this.shots[i]);
             this.shots.splice(i, 1);
         }
@@ -631,12 +630,12 @@ class GameLogic extends Base
             let me = this;
             me.state = GameState.waving;
             let wave = me.waves.next();
-            wave.addEventListener(events.waveFinished, function() {
+            wave.addEventListener(events.waveFinished, function () {
                 me.triggerEvent(events.waveFinished);
                 wave.removeEventListener(events.waveFinished);
                 wave.removeEventListener(events.unitSpawned);
             });
-            wave.addEventListener(events.unitSpawned, function(e) {
+            wave.addEventListener(events.unitSpawned, function (e) {
                 me.triggerEvent(events.unitSpawned, e);
             });
             me.triggerEvent(events.waveCreated, wave);
@@ -663,10 +662,10 @@ class GameLogic extends Base
                 this.player.addMoney(-towerType.cost);
                 this.addTower(newTower);
                 // if (!isrock) {
-                    // this.triggerEvent(events.towerNumberChanged, {
-                    //     current: numShooting + 1,
-                    //     maximum: this.maxTowerNumber,
-                    // });
+                // this.triggerEvent(events.towerNumberChanged, {
+                //     current: numShooting + 1,
+                //     maximum: this.maxTowerNumber,
+                // });
                 // }
                 return true;
             }
@@ -681,67 +680,66 @@ class GameLogic extends Base
     destroyTower(pt) {
         //任意状态都可以删除塔
         // if (this.state == GameState.building) {
-            let towerToRemove = this.towers.filter((t)=>{
-                return t.mazeCoordinates.x === pt.x && t.mazeCoordinates.y === pt.y;
-            })[0];
-            if (towerToRemove) {
-                this.player.addMoney(0.5 * towerToRemove.cost);
-                this.removeTower(towerToRemove);
-                this.maze.tryRemove(pt);
-                // if (!(towerToRemove instanceof Rock)) {
-                    // this.triggerEvent(events.towerNumberChanged, {
-                    //     current: this.getNumShooting(),
-                    //     maximum: this.maxTowerNumber,
-                    // });
-                // }
-            }
+        let towerToRemove = this.towers.filter((t) => {
+            return t.mazeCoordinates.x === pt.x && t.mazeCoordinates.y === pt.y;
+        })[0];
+        if (towerToRemove) {
+            this.player.addMoney(0.5 * towerToRemove.cost);
+            this.removeTower(towerToRemove);
+            this.maze.tryRemove(pt);
+            // if (!(towerToRemove instanceof Rock)) {
+            // this.triggerEvent(events.towerNumberChanged, {
+            //     current: this.getNumShooting(),
+            //     maximum: this.maxTowerNumber,
+            // });
+            // }
+        }
         // }
     }
     /**
      * 购买生命
      * @returns {boolean}
      */
-    // buyMediPack() {
-    //     let cost = this.mediPackCost;
-    //     if (this.player.money >= cost) {
-    //         this.player.addHitpoints(this.mediPackHealth);
-    //         this.setMediPackCost(~~(this.mediPackFactor * cost));
-    //         this.player.addMoney(-cost);
-    //         return true;
-    //     }
-    //     return false;
-    // }
-    // buyTowerBuildRight() {
-    //     let cost = this.towerBuildCost;
-    //     if (this.player.money >= cost) {
-    //         this.setMaxTowerNumber(this.maxTowerNumber + 1);
-    //         this.setTowerBuildCost(~~(this.towerBuildFactor * cost));
-    //         this.player.addMoney(-cost);
-    //         return true;
-    //     }
-    //     return false;
-    // }
-    // setMediPackCost(cost) {
-    //     this.mediPackCost = cost;
-    //     this.triggerEvent(events.mediPackCostChanged, cost);
-    // }
-    // setTowerBuildCost(cost) {
-    //     this.towerBuildCost = cost;
-    //     this.triggerEvent(events.towerBuildCostChanged, cost);
-    // }
-    // setMaxTowerNumber(number) {
-    //     let numShooting = this.getNumShooting();
-    //     this.maxTowerNumber = number;
-    //     this.triggerEvent(events.towerNumberChanged, {
-    //         current: numShooting,
-    //         maximum: number,
-    //     });
-    // }
+    buyMediPack() {
+        let cost = this.mediPackCost;
+        if (this.player.money >= cost) {
+            this.player.addHitpoints(this.mediPackHealth);
+            this.setMediPackCost(~~(this.mediPackFactor * cost));
+            this.player.addMoney(-cost);
+            return true;
+        }
+        return false;
+    }
+    buyTowerBuildRight() {
+        let cost = this.towerBuildCost;
+        if (this.player.money >= cost) {
+            this.setMaxTowerNumber(this.maxTowerNumber + 1);
+            this.setTowerBuildCost(~~(this.towerBuildFactor * cost));
+            this.player.addMoney(-cost);
+            return true;
+        }
+        return false;
+    }
+    setMediPackCost(cost) {
+        this.mediPackCost = cost;
+        this.triggerEvent(events.mediPackCostChanged, cost);
+    }
+    setTowerBuildCost(cost) {
+        this.towerBuildCost = cost;
+        this.triggerEvent(events.towerBuildCostChanged, cost);
+    }
+    setMaxTowerNumber(number) {
+        let numShooting = this.getNumShooting();
+        this.maxTowerNumber = number;
+        this.triggerEvent(events.towerNumberChanged, {
+            current: numShooting,
+            maximum: number,
+        });
+    }
 }
 
-class WaveList
-{
-    constructor(){
+class WaveList {
+    constructor() {
         this.waves = [];
         this.index = 0;
         this.unitNames = Object.keys(types.units);
@@ -758,7 +756,7 @@ class WaveList
      *
      * @returns {*}
      */
-    random(){
+    random() {
         let wave = new Wave(this.index);
         //某一轮所应有的怪物数量
         let n = ~~(1.580451 - 0.169830 * this.index + 0.071592 * this.index * this.index);
@@ -771,7 +769,7 @@ class WaveList
         wave.prizeMoney = n;
         for (let i = 0; i < n; ++i) {
             //优化算法，提升速度
-            let tmp1 = m-1,
+            let tmp1 = m - 1,
                 tmp2 = (~~randg(1.0, 0.5 * upper));
             let j = tmp1 < tmp2 ? ((tmp1 > 0) ? tmp1 : 0) : ((tmp2 > 0) ? tmp2 : 0);
             //Math算法效率慢
@@ -783,7 +781,7 @@ class WaveList
         return wave;
     }
 
-    nextOpponents(){
+    nextOpponents() {
         let upper = this.index * 0.3 + 1.3;
         let m = Math.min(this.unitNames.length, ~~upper);
         let units = [];
@@ -792,8 +790,8 @@ class WaveList
         return units;
     }
 
-    next(){
-        if (this.index < this.waves.length){
+    next() {
+        if (this.index < this.waves.length) {
             return this.waves[this.index++];
         }
         ++this.index;
@@ -802,8 +800,7 @@ class WaveList
 }
 
 
-class Wave extends Base
-{
+class Wave extends Base {
     constructor(index) {
         super();
         this.index = index || 0;
@@ -824,7 +821,7 @@ class Wave extends Base
     update() {
         let unitsToSpawn = [];
         if (!this.finished) {
-            for (let i = this.units.length; i--; ) {
+            for (let i = this.units.length; i--;) {
                 if (this.units[i].time < this.startTime) {
                     unitsToSpawn.push(this.units[i].unit);
                     this.units.splice(i, 1);

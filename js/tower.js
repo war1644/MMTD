@@ -135,7 +135,7 @@ class BigGun extends Tower
 BigGun.description = '攻击贼高，穿透攻击，速度贼慢';
 BigGun.nickName = '巨炮';
 BigGun.sprite = 'bigGun';
-BigGun.frames = [1];
+BigGun.frames = [6];
 BigGun.shotType = HellShot;
 BigGun.speed = 1.0;
 BigGun.range = 2.0;
